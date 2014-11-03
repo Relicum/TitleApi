@@ -12,6 +12,7 @@ TitleApi gives developers easy access to the following (MC)1.8 features:
 * Tab Header
 * Tab Footer
 * Action Bar
+
 ---
 
 All plugins that wish to use this must make sure there plugin.yml includes a dependency to TitleApi
