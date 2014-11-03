@@ -1,0 +1,5 @@
+name: TitleApi
+main: com.relicum.titleapi.TitleApi
+author: Relicum
+version: ${project.version}
+description: Title Api for displaying Titles and Tabs
