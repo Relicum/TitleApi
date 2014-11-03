@@ -1,4 +1,4 @@
-##TitleApi
+##TitleApi 1.0.2-SNAPSHOT
 ```
 REQUIRES
 * Latest Patch Spigot
