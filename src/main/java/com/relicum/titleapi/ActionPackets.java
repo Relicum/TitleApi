@@ -19,6 +19,7 @@
 package com.relicum.titleapi;
 
 import com.relicum.titleapi.Components.ChatSerialize;
+import com.relicum.titleapi.Components.TitleTimes;
 import net.minecraft.server.v1_7_R4.PacketPlayOutChat;
 import org.spigotmc.ProtocolInjector;
 
@@ -42,6 +43,18 @@ public class ActionPackets {
     protected static ProtocolInjector.PacketTitle getTimes(int fadeIn, int stay, int fadeOut) {
 
         return new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.TIMES, fadeIn, stay, fadeOut);
+    }
+
+    /**
+     * Get the packet for the times for fade in, stay and fade out.
+     * <p>All times are in ticks, set to -1 to not set a field.
+     *
+     * @param titleTimes instance of {@link com.relicum.titleapi.Components.TitleTimes}
+     * @return the {@link org.spigotmc.ProtocolInjector.PacketTitle} packet for times.
+     */
+    protected static ProtocolInjector.PacketTitle getTimes(TitleTimes titleTimes) {
+
+        return new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.TIMES, titleTimes.getFadeIn(), titleTimes.getStay(), titleTimes.getFadeOut());
     }
 
     /**

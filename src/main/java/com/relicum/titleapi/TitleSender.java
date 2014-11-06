@@ -18,14 +18,14 @@
 
 package com.relicum.titleapi;
 
+import com.relicum.titleapi.Components.TitleComponents;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 /**
- * TitleSender used to send a single Title to the specified player.
- * <p>The only setting you have to set is the Title, the rest are optional.
- * <p>
- * <p>When ready just call the {@link TitleSender#send()} to display title to player.
+ * TitleSender is a quick and easy class to send Titles to a player, this class is meant to be used in conjunction with.
+ * <p>{@link com.relicum.titleapi.Components.TitleBuilder} and {@link com.relicum.titleapi.Components.TitleComponents} .
+ * <p>The 3 class combine to provide a way to persist the values to disk load them from disk and directly send it to players.
  *
  * @author Relicum
  * @version 0.0.1
@@ -33,147 +33,74 @@ import org.bukkit.entity.Player;
 public class TitleSender {
 
     private CraftPlayer p;
-    private Boolean playerSet = false;
-    private Integer[] times = new Integer[3];
-    private String theTitle;
-    private String theSubTitle = "";
-    private Boolean useTimes = false;
-    private Boolean useTitle = false;
-    private Boolean useSubTitle = false;
-    private Boolean useClear = false;
-    private Boolean useReset = false;
+    private boolean playerSet = false;
+    private TitleComponents components;
 
-    private TitleSender(Player player) {
+    private TitleSender(TitleComponents components) {
+        this.components = components;
+    }
 
+    /**
+     * Get new instance of TitleSender passing in {@link com.relicum.titleapi.Components.TitleComponents}
+     *
+     * @param components the instance of {@link com.relicum.titleapi.Components.TitleComponents}
+     * @return the instance of TitleSender.
+     */
+    public static TitleSender get(TitleComponents components) {
+        return new TitleSender(components);
+    }
+
+    /**
+     * Sets player to send the Titles to, this object can be reused by setting the player to a different one and calling send.
+     *
+     * @param player the player
+     */
+    public void setPlayer(Player player) {
         this.p = (CraftPlayer) player;
         this.playerSet = true;
     }
 
     /**
-     * Create a new TitleSender and returns the instance for chaining other methods.
+     * Send the Title packets to the player
      *
-     * @param player the player to display the title to.
-     * @return instance of itself for chaining.
-     */
-    public static TitleSender get(Player player) {
-        return new TitleSender(player);
-    }
-
-    /**
-     * Set for times for fade in, stay and fade out.
-     * <p>All times are in ticks, set to -1 to not set a field.
-     *
-     * @param in  the fade in time.
-     * @param st  the time the message stays displayed.
-     * @param out the fade out time.
-     * @return instance of itself for chaining.
-     */
-    public TitleSender setTimes(int in, int st, int out) {
-
-        this.times[0] = in;
-        this.times[1] = st;
-        this.times[2] = out;
-
-        this.useTimes = true;
-
-        return this;
-
-    }
-
-    /**
-     * Sets title.
-     *
-     * @param mess the title message
-     * @return instance of itself for chaining.
-     */
-    public TitleSender setTitle(String mess) {
-
-        this.theTitle = mess;
-        this.useTitle = true;
-        return this;
-    }
-
-    /**
-     * Sets sub title.
-     *
-     * @param mess the sub message
-     * @return instance of itself for chaining.
-     */
-    public TitleSender setSubTitle(String mess) {
-
-        this.theSubTitle = mess;
-        this.useSubTitle = true;
-        return this;
-    }
-
-    /**
-     * Set if a clear packet should be sent
-     *
-     * @param clear true to send a clear packet
-     * @return instance of itself for chaining.
-     */
-    public TitleSender setSendClear(boolean clear) {
-        this.useClear = clear;
-        return this;
-    }
-
-    /**
-     * Set if a reset packet should be sent
-     *
-     * @param reset true to send a reset packet
-     * @return instance of itself for chaining.
-     */
-    public TitleSender setSendReset(boolean reset) {
-        this.useReset = reset;
-        return this;
-    }
-
-
-    /**
-     * Create Title and display to player.
+     * @throws Exception the exception if a player has not been set.
      */
     public void send() throws Exception {
 
-        if (!playerSet) throw new Exception("No player is set");
+        if (!isPlayerSet()) throw new Exception("No player has been set");
+        else {
+            if (components.isUseClear())
+                sendClearPacket();
+            if (components.isUseReset())
+                sendResetPacket();
+            if (components.isUseTimes())
+                sendTimes();
+            if (components.isUseTitle())
+                sendTitle();
+            if (components.isUseSubTitle())
+                sendSubTitle();
 
-
-        if (useClear) {
-            sendClearPacket();
+            p = null;
+            playerSet = false;
         }
-        if (useReset) {
-            sendResetPacket();
-        }
-        if (useTimes) {
-            sendTimes();
-        }
-        if (useTitle) {
-            sendTitle();
-        }
-        if (useSubTitle) {
-            sendSubTitle();
-        } else sendSubTitle();
-
-        p = null;
 
     }
 
 
     private void sendTitle() {
 
-        // p.getHandle().playerConnection.sendPacket(new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.TITLE, MSerialize.serializer(theTitle)));
-        p.getHandle().playerConnection.sendPacket(ActionPackets.getTitle(theTitle));
+        p.getHandle().playerConnection.sendPacket(ActionPackets.getTitle(components.getTheTitle()));
 
     }
 
     private void sendSubTitle() {
 
-        //p.getHandle().playerConnection.sendPacket(new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.SUBTITLE, MSerialize.serializer(theSubTitle)));
-        p.getHandle().playerConnection.sendPacket(ActionPackets.getSubTitle(theSubTitle));
+        p.getHandle().playerConnection.sendPacket(ActionPackets.getSubTitle(components.getTheSubTitle()));
     }
 
     private void sendTimes() {
 
-        p.getHandle().playerConnection.sendPacket(ActionPackets.getTimes(times[0], times[1], times[2]));
+        p.getHandle().playerConnection.sendPacket(ActionPackets.getTimes(components.getFadeIn(), components.getStay(), components.getFadeOut()));
     }
 
 
@@ -189,12 +116,8 @@ public class TitleSender {
         p.getHandle().playerConnection.sendPacket(ActionPackets.getReset());
     }
 
-    /**
-     * Sets new p.
-     *
-     * @param p New value of p.
-     */
-    public void setP(Player p) {
-        this.p = (CraftPlayer) p;
+
+    private boolean isPlayerSet() {
+        return playerSet;
     }
 }

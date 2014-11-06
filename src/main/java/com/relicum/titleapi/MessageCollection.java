@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * Name: MessageCollection.java Created: 06 November 2014
+ * MessageCollection used to store a collection of messages THIS IS INCOMPLETE DO NOT USE.
  *
  * @author Relicum
  * @version 0.0.1

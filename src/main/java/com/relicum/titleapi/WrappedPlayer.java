@@ -43,6 +43,12 @@ public class WrappedPlayer {
     private WeakReference<CraftPlayer> player;
 
 
+    /**
+     * Instantiates a new Wrapped player.
+     * <p>The player will internally be wrapped with a {@link java.lang.ref.WeakReference}
+     *
+     * @param play the {@link org.bukkit.entity.Player}
+     */
     public WrappedPlayer(Player play) {
 
 
@@ -50,37 +56,79 @@ public class WrappedPlayer {
 
     }
 
+    /**
+     * Remove the currently displayed title from the player's screen
+     * and set the configuration back to the default values.
+     *
+     * @throws Exception the most like to indicate the player object has been de referenced.
+     */
     public void sendResetPacket() throws Exception {
 
         sendPacket(ActionPackets.getReset());
 
     }
 
+    /**
+     * Remove the currently displayed title from the player's screen.
+     * This will keep the currently used display times and will only remove the title.
+     *
+     * @throws Exception the most like to indicate the player object has been de referenced.
+     */
     public void sendClearPacket() throws Exception {
 
         sendPacket(ActionPackets.getClear());
     }
 
+    /**
+     * Send animation Times packet.
+     *
+     * @param packetTimes the packet times
+     * @throws Exception the most like to indicate the player object has been de referenced.
+     */
     public void sendTimesPacket(ProtocolInjector.PacketTitle packetTimes) throws Exception {
 
         sendPacket(packetTimes);
     }
 
+    /**
+     * Send Title packet.
+     *
+     * @param packetTitle ProtocolInjector.PacketTitle packet
+     * @throws Exception the most like to indicate the player object has been de referenced.
+     */
     public void sendTitlePacket(ProtocolInjector.PacketTitle packetTitle) throws Exception {
 
         sendPacket(packetTitle);
     }
 
+    /**
+     * Send SubTitle packet.
+     *
+     * @param packetSubTitle the ProtocolInjector.PacketTitle packet
+     * @throws Exception the most like to indicate the player object has been de referenced.
+     */
     public void sendSubTitlePacket(ProtocolInjector.PacketTitle packetSubTitle) throws Exception {
 
         sendPacket(packetSubTitle);
     }
 
+    /**
+     * Send TabHeader packet, Both header and footer must contain a value.
+     *
+     * @param packetTabHeader ProtocolInjector.PacketTabHeader
+     * @throws Exception the most like to indicate the player object has been de referenced.
+     */
     public void sendTabPacket(ProtocolInjector.PacketTabHeader packetTabHeader) throws Exception {
 
         sendPacket(packetTabHeader);
     }
 
+    /**
+     * Send Action Bar Packet
+     *
+     * @param packetActionBar PacketPlayOutChat packet configured as a system packet
+     * @throws Exception the most like to indicate the player object has been de referenced.
+     */
     public void sendActionBarPacket(PacketPlayOutChat packetActionBar) throws Exception {
 
         sendPacket(packetActionBar);
@@ -102,5 +150,13 @@ public class WrappedPlayer {
      */
     public WeakReference<CraftPlayer> getPlayer() {
         return player;
+    }
+
+    /**
+     * Clear the {@link java.lang.ref.WeakReference} to the player, call this when you no longer need this object.
+     */
+    public void clear() {
+
+        this.player.clear();
     }
 }

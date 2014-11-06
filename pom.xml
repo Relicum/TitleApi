@@ -7,7 +7,7 @@
     <artifactId>TitleApi</artifactId>
     <packaging>jar</packaging>
     <name>TitleApi</name>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.3-SNAPSHOT</version>
 
     <build>
         <defaultGoal>clean install</defaultGoal>

@@ -96,6 +96,18 @@ public class API {
     }
 
     /**
+     * Get the packet for the times for fade in, stay and fade out.
+     * <p>All times are in ticks, set to -1 to not set a field.
+     *
+     * @param titleTimes instance of {@link com.relicum.titleapi.Components.TitleTimes}
+     * @return the {@link org.spigotmc.ProtocolInjector.PacketTitle} packet for times.
+     */
+    public ProtocolInjector.PacketTitle getTimesPacket(TitleTimes titleTimes) {
+
+        return ActionPackets.getTimes(titleTimes);
+    }
+
+    /**
      * Get Title Packet
      * <p>Use <strong>&amp;</strong> and the color code to add color eg <strong>&amp;4</strong> for dark red.
      *
@@ -172,6 +184,7 @@ public class API {
     /**
      * Get title times builder, simple build to create an object representing the values of a Times packet.
      * <p>Define fadeIn,stay and fadeOut and use it as an easy way to pass the object to other objects.
+     * <p>This can be passed to {@link #getTimesPacket(com.relicum.titleapi.Components.TitleTimes)} to create the times packet.
      *
      * @return {@link com.relicum.titleapi.Components.TitleTimes.TitleTimesBuilder} object.
      */
@@ -181,25 +194,35 @@ public class API {
     }
 
 
-    public TitleSender getTitleSender(Player player) {
-
-        return TitleSender.get(player);
-    }
-
     public TitleBuilder getTitleBuilder() {
         return TitleBuilder.get();
     }
 
-    public TitlesSender getTitlesSender(TitleComponents components) {
+    public TitleSender getTitlesSender(TitleComponents components) {
 
-        return TitlesSender.get(components);
+        return TitleSender.get(components);
     }
 
+    /**
+     * Serializer, escape and colorize the text returning it as an instance of {@link net.minecraft.server.v1_7_R4.IChatBaseComponent}
+     * <p>If you are using placeholders they should be formatted before creating this object. This object can be used directly as a message
+     * for Titles or Tab Headers and Footers.
+     *
+     * @param message the text to be serialize,
+     * @return the {@link net.minecraft.server.v1_7_R4.IChatBaseComponent}
+     */
     public IChatBaseComponent getIChatBaseComponent(String message) {
 
         return ChatSerialize.serializer(message);
     }
 
+    /**
+     * Serializer, escape and colorize the text returning it as an instance of {@link net.minecraft.server.v1_7_R4.ChatBaseComponent}
+     * <p>If you are using placeholders they should be formatted before creating this object.
+     *
+     * @param message the text to be serialize,
+     * @return the {@link net.minecraft.server.v1_7_R4.ChatBaseComponent}
+     */
     public ChatBaseComponent getChatComponent(String message) {
 
         return ChatSerialize.serializerChat(message);

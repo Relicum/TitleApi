@@ -18,6 +18,9 @@
 
 package com.relicum.titleapi.Components;
 
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.SerializableAs;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
@@ -25,12 +28,38 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Name: TitleComponents.java Created: 04 November 2014
+ * TitleComponents is built using {@link com.relicum.titleapi.Components.TitleBuilder} .
+ * <p>Holds all the values required to send a basic Title and Sub Title to the player with the advantage that this class already implements {@link org.bukkit.configuration.serialization.ConfigurationSerializable} .
+ * <p>This allows you to save this instances of this object to the standard config.yml file like it was any other value. Nothing extra is required when saving and loading it from file.
+ * <p>You will need to add this to your plugins onEnable, needs to be the first or second line of the method <i>ConfigurationSerialization.registerClass(TitleComponents.class);</i>
+ * <p>Use <strong>&amp;</strong> and the color code to add color eg <strong>&amp;4</strong> for dark red.
+ * <pre>
+ *     <code>
+ *      TitleComponents titleBuilder = TitleBuilder.get()
+ *          .withSubTitle("&amp;5This is the sub title")
+ *          .withTitle("&amp;aThe main title")
+ *          .withTimes(-1,80,-1)
+ *          .withReset(true)
+ *          .build();
+ *     getConfig().set("title.settings",titleBuilder);
+ *     </code>
+ * </pre>
+ * <p>Then to load the object back from file and send it directly to a player, see {@link com.relicum.titleapi.TitleSender} .
+ * <pre>
+ *     <code>
+ *      TitleComponents titleBuilder= (TitleComponents) getConfig().get("title.settings");
+ *
+ *      TitleSender sender=  TitleSender.get(titleBuilder);
+ *      sender.setPlayer(player);
+ *      sender.send();
+ *     </code>
+ * </pre>
  *
  * @author Relicum
  * @version 0.0.1
  */
-public class TitleComponents {
+@SerializableAs("TitleComponents")
+public class TitleComponents implements ConfigurationSerializable {
 
     private final Integer fadeIn;
     private final Integer stay;
@@ -204,4 +233,22 @@ public class TitleComponents {
         return data;
     }
 
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("TitleComponents{");
+        sb.append("fadeIn=").append(fadeIn);
+        sb.append(", stay=").append(stay);
+        sb.append(", fadeOut=").append(fadeOut);
+        sb.append(", theTitle='").append(theTitle).append('\'');
+        sb.append(", theSubTitle='").append(theSubTitle).append('\'');
+        sb.append(", useTimes=").append(useTimes);
+        sb.append(", useTitle=").append(useTitle);
+        sb.append(", useSubTitle=").append(useSubTitle);
+        sb.append(", useClear=").append(useClear);
+        sb.append(", useReset=").append(useReset);
+        sb.append(", rialize=").append(serialize());
+        sb.append('}');
+        return sb.toString();
+    }
 }

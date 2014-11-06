@@ -51,10 +51,10 @@ public class TitleApi extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
 
-
         instance = this;
         beingUsed = false;
         Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "Title API is being enabled");
+
     }
 
     @Override
