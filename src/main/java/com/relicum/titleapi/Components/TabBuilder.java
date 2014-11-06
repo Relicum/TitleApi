@@ -41,12 +41,12 @@ public class TabBuilder {
     }
 
     public TabBuilder setHeader(String header) {
-        this.header = MSerialize.serializerChat(header);
+        this.header = ChatSerialize.serializerChat(header);
         return this;
     }
 
     public TabBuilder setFooter(String footer) {
-        this.footer = MSerialize.serializerChat(footer);
+        this.footer = ChatSerialize.serializerChat(footer);
         return this;
     }
 

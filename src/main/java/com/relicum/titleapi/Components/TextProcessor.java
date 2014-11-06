@@ -165,4 +165,15 @@ public class TextProcessor {
         sb.append('"');
         return sb.toString();
     }
+
+    /**
+     * Convert and colorize.
+     *
+     * @param text the text
+     * @return the string
+     */
+    public static String convertAndColorize(String text) {
+
+        return convert(colorize(text));
+    }
 }

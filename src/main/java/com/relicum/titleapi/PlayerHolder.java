@@ -22,12 +22,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 /**
- * Name: PlayerHolder.java Created: 06 November 2014
+ * PlayerHolder used to define placeholders directly related to the {@link org.bukkit.entity.Player} object.
+ * <p>Just add the name of the place holder wrapped with brackets <strong>{player}</strong> and use the {@link PlayerHolder} to do the replacing.
+ * <p>By default placeholders is not activated to activate it call {@link com.relicum.titleapi.API#enablePlaceHolders()} method.
+ * <p>Then pass the raw message to {@link com.relicum.titleapi.TitleApi#replaceHolders(String, org.bukkit.entity.Player)}
  *
  * @author Relicum
  * @version 0.0.1
  */
-class PlayerHolder extends Holder {
+public class PlayerHolder extends Holder {
 
 
     protected PlayerHolder(HolderType type, Plugin plugin) {

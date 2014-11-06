@@ -1,5 +1,3 @@
-
-
 /*
  * TitleApi is a development API for Minecraft Titles and Tabs, developed by Relicum
  * Copyright (C) 2014.  Chris Lutte
@@ -22,8 +20,6 @@ package com.relicum.titleapi;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -54,6 +50,8 @@ public class TitleApi extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+
+
         instance = this;
         beingUsed = false;
         Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "Title API is being enabled");
@@ -133,12 +131,7 @@ public class TitleApi extends JavaPlugin implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent e) {
 
-
-        //  if(playerVersion.containsKey(e.getPlayer().getUniqueId())) return;
-
-        System.out.println("Adding player to list");
         playerVersion.put(e.getPlayer().getUniqueId(), ((CraftPlayer) e.getPlayer()).getHandle().playerConnection.networkManager.getVersion());
-
     }
 
     @EventHandler
@@ -160,9 +153,4 @@ public class TitleApi extends JavaPlugin implements Listener {
         } else return false;
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-
-        return true;
-    }
 }

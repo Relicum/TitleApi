@@ -18,12 +18,15 @@
 
 package com.relicum.titleapi;
 
-import com.relicum.titleapi.Components.MSerialize;
+import com.relicum.titleapi.Components.ChatSerialize;
 import net.minecraft.server.v1_7_R4.PacketPlayOutChat;
 import org.spigotmc.ProtocolInjector;
 
 /**
- * The type Action packets.
+ * Action packets creates the different packets used to send Titles, Tabs and Action bar messages.
+ * <p>Access to these methods can be found in the {@link com.relicum.titleapi.API} class.
+ *
+ * @author Relicum
  */
 public class ActionPackets {
 
@@ -69,7 +72,7 @@ public class ActionPackets {
      */
     protected static ProtocolInjector.PacketTitle getTitle(String message) {
 
-        return new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.TITLE, MSerialize.serializer(message));
+        return new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.TITLE, ChatSerialize.serializer(message));
     }
 
     /**
@@ -80,7 +83,7 @@ public class ActionPackets {
      */
     protected static ProtocolInjector.PacketTitle getSubTitle(String message) {
 
-        return new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.SUBTITLE, MSerialize.serializer(message));
+        return new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.SUBTITLE, ChatSerialize.serializer(message));
     }
 
     /**
@@ -92,7 +95,7 @@ public class ActionPackets {
      */
     protected static ProtocolInjector.PacketTabHeader getTab(String header, String footer) {
 
-        return new ProtocolInjector.PacketTabHeader(MSerialize.serializer(header), MSerialize.serializer(footer));
+        return new ProtocolInjector.PacketTabHeader(ChatSerialize.serializer(header), ChatSerialize.serializer(footer));
     }
 
     /**
@@ -103,7 +106,7 @@ public class ActionPackets {
      */
     protected static PacketPlayOutChat getActionBar(String message) {
 
-        return new PacketPlayOutChat(MSerialize.serializer(message), 2);
+        return new PacketPlayOutChat(ChatSerialize.serializer(message), 2);
     }
 
 }

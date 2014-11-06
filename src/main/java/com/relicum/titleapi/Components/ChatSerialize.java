@@ -18,47 +18,60 @@
 
 package com.relicum.titleapi.Components;
 
-import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_7_R4.ChatBaseComponent;
 import net.minecraft.server.v1_7_R4.ChatSerializer;
 import net.minecraft.server.v1_7_R4.IChatBaseComponent;
-import net.minecraft.util.com.google.gson.Gson;
-import net.minecraft.util.com.google.gson.GsonBuilder;
 
 /**
- * MSerialize used internally to serialize messages and convert color codes.
+ * ChatSerialize used internally to serialize messages and convert color codes.
  *
  * @author Relicum
  * @version 0.0.1
  */
-public class MSerialize {
+public class ChatSerialize {
 
-    Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
 
     public static String colorize(String string) {
 
         return string.replaceAll("(&([a-fklmnor0-9]))", "\u00A7$2");
     }
 
+    /**
+     * Escape and colorize any string.
+     *
+     * @param message the message to escape and colorize
+     * @return the formatted string
+     */
     public static String textConvert(String message) {
 
-        return TextConverter.convert(colorize(message));
+        return TextProcessor.convertAndColorize(message);
     }
 
+    /**
+     * Serializer, escape and colorize the text returning it as an instance of {@link net.minecraft.server.v1_7_R4.IChatBaseComponent}
+     * <p>If you are using placeholders they should be formatted before creating this object. This object can be used directly as a message
+     * for Titles or Tab Headers and Footers.
+     *
+     * @param text the text to be serialize,
+     * @return the {@link net.minecraft.server.v1_7_R4.IChatBaseComponent}
+     */
     public static IChatBaseComponent serializer(String text) {
 
-        return ChatSerializer.a(TextConverter.convert(colorize(text)));
+        return ChatSerializer.a(TextProcessor.convertAndColorize(text));
 
     }
 
+    /**
+     * Serializer, escape and colorize the text returning it as an instance of {@link net.minecraft.server.v1_7_R4.ChatBaseComponent}
+     * <p>If you are using placeholders they should be formatted before creating this object.
+     *
+     * @param text the text to be serialize,
+     * @return the {@link net.minecraft.server.v1_7_R4.ChatBaseComponent}
+     */
     public static ChatBaseComponent serializerChat(String text) {
 
-        return (ChatBaseComponent) ChatSerializer.a(TextConverter.convert(colorize(text)));
+        return (ChatBaseComponent) ChatSerializer.a(TextProcessor.convertAndColorize(text));
 
     }
 
-    public static TextComponent getTextComponent(String message) {
-
-        return new TextComponent(MSerialize.colorize(message));
-    }
 }

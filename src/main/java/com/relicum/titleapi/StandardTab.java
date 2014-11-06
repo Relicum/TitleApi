@@ -18,13 +18,18 @@
 
 package com.relicum.titleapi;
 
+import com.relicum.titleapi.Components.Tab;
 import net.minecraft.server.v1_7_R4.IChatBaseComponent;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.spigotmc.ProtocolInjector;
 
 /**
- * Name: StandardTab.java Created: 04 November 2014
+ * StandardTab implementation set the header and footer and call send.
+ * <p>The messages are passed as instances of {@link net.minecraft.server.v1_7_R4.IChatBaseComponent} you can create this
+ * on the fly using {@link com.relicum.titleapi.Components.ChatSerialize#serializer(String)} , just pass it the plain text.
+ * It will serialize and colorize as well as converting the text to the IChatBaseComponent.
+ * <p>Call {@link #send(org.bukkit.entity.Player)} to set the tab header and footer. To add new lines to the footer use \n .
  *
  * @author Relicum
  * @version 0.0.1

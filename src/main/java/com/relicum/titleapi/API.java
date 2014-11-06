@@ -20,7 +20,6 @@ package com.relicum.titleapi;
 
 import com.relicum.titleapi.Components.*;
 import lombok.Getter;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_7_R4.ChatBaseComponent;
 import net.minecraft.server.v1_7_R4.IChatBaseComponent;
 import net.minecraft.server.v1_7_R4.PacketPlayOutChat;
@@ -40,16 +39,11 @@ public class API {
     @Getter
     private final Plugin plugin;
 
-    private final ProtocolInjector.PacketTitle reset;
-
-    private final ProtocolInjector.PacketTitle clear;
-
     private final String testMessage;
 
     protected API(Plugin plugin) {
         this.plugin = plugin;
-        this.reset = ActionPackets.getReset();
-        this.clear = ActionPackets.getClear();
+
         testMessage = "Test Message Successful";
     }
 
@@ -151,10 +145,41 @@ public class API {
         return ActionPackets.getActionBar(message);
     }
 
+    /**
+     * Check player protocol version.
+     * <p>The result is cached to allow for faster look ups if needed later. When the player quits they are automatically removed from the cache.
+     *
+     * @param player the player to check
+     * @return true if the player is using version 47 (1.8) false for any other version.
+     */
     public boolean checkVersion(Player player) {
 
         return TitleApi.get().checkVersion(player.getUniqueId());
     }
+
+    /**
+     * Send a single Action bar message to the player.
+     * <p>Use <strong>&amp;</strong> and the color code to add color eg <strong>&amp;4</strong> for dark red.
+     *
+     * @param player  the player to send the action bar message to.
+     * @param message the message to display on the action bar.
+     */
+    public void sendActionBar(Player player, String message) {
+
+        ActionBar.sendToPlayer(player, message);
+    }
+
+    /**
+     * Get title times builder, simple build to create an object representing the values of a Times packet.
+     * <p>Define fadeIn,stay and fadeOut and use it as an easy way to pass the object to other objects.
+     *
+     * @return {@link com.relicum.titleapi.Components.TitleTimes.TitleTimesBuilder} object.
+     */
+    public TitleTimes.TitleTimesBuilder getTitleTimesBuilder() {
+
+        return TitleTimes.newBuilder();
+    }
+
 
     public TitleSender getTitleSender(Player player) {
 
@@ -172,17 +197,12 @@ public class API {
 
     public IChatBaseComponent getIChatBaseComponent(String message) {
 
-        return MSerialize.serializer(message);
+        return ChatSerialize.serializer(message);
     }
 
     public ChatBaseComponent getChatComponent(String message) {
 
-        return MSerialize.serializerChat(message);
-    }
-
-    public TextComponent getTextComponent(String message) {
-
-        return BaseComponents.getTextComponent(message);
+        return ChatSerialize.serializerChat(message);
     }
 
     public MultiTitleBuilder getMultiTitleBuilder() {
@@ -203,11 +223,6 @@ public class API {
     public TabSender getTabSender(IChatBaseComponent header, IChatBaseComponent footer) {
 
         return TabSender.get(header, footer);
-    }
-
-    public void sendActionBar(Player player, String message) {
-
-        ActionBar.sendToPlayer(player, message);
     }
 
     public Title getTitle() {

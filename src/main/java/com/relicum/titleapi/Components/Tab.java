@@ -18,24 +18,38 @@
 
 package com.relicum.titleapi.Components;
 
+import net.minecraft.server.v1_7_R4.IChatBaseComponent;
+import org.bukkit.entity.Player;
+
 /**
- * Name: TitleFactory.java Created: 06 November 2014
+ * Tab set the Header and Footer tabs.
  *
  * @author Relicum
- * @version 0.0.1
  */
-public class TitleFactory {
+public interface Tab {
 
-    private TitleFactory() {
-    }
 
-/*    public static Title getStandardTitle(){
+    /**
+     * Sets the text for the tab header
+     *
+     * @param text the text
+     * @return instance of itself for chaining
+     */
+    public Tab setHeader(IChatBaseComponent text);
 
-       return StandardTitle.get();
-    }
+    /**
+     * Sets the text for the tab foot
+     *
+     * @param text the text to display on tab footer
+     * @return instance of itself for chaining
+     */
+    public Tab setFooter(IChatBaseComponent text);
 
-    public static BasicTitle getNewBasicTitle(){
-
-        return BasicTitle.get();
-    }*/
+    /**
+     * Send the Header and Footer to player
+     *
+     * @param player the {@link org.bukkit.entity.Player}
+     * @return instance of itself for chaining
+     */
+    public Tab send(Player player);
 }

@@ -18,9 +18,11 @@
 
 package com.relicum.titleapi;
 
+
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,28 +30,30 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Placeholder
+ * Placeholder manages the registering of objects containing place holders as well as find and replace of message strings past to it.
  *
  * @author Relicum
  * @version 0.0.1
  */
-class Placeholder {
+public class Placeholder {
 
     private Map<HolderType, Holder> lookup;
-    private Map<String, HolderType> holderLookup = new HashMap<>();
+    private Map<String, HolderType> holderLookup;
     private Pattern pattern = Pattern.compile("(\\{(?<res>[a-zA-Z_]+)\\})");
 
-    public static Placeholder instance;
+    protected static Placeholder instance;
 
     protected Placeholder(Plugin plugin) {
         instance = this;
-        lookup = new HashMap<>();
+        lookup = Collections.synchronizedMap(new HashMap<>());
+        holderLookup = Collections.synchronizedMap(new HashMap<>());
 
 
     }
 
     /**
      * Register a new place holder class which must extend {@link Holder}
+     * <p>Currently for internal use only.
      *
      * @param holder the object to register
      */
@@ -66,9 +70,9 @@ class Placeholder {
      * Replace all placeholders with the corresponding text.
      * <p>This method will find and replace all placeholders in the string in one go.
      *
-     * @param search the search
+     * @param search the message to search for
      * @param player the player
-     * @return the string
+     * @return the formatted string having any placeholders replaced.
      */
     public String replaceAll(String search, Player player) {
 
@@ -85,6 +89,13 @@ class Placeholder {
         return sb.toString();
     }
 
+    /**
+     * Callback method used when a match is found it is passed to this method which will then replace the corresponding place holder.
+     *
+     * @param result the the place holder found having already been stripped of any { tags
+     * @param player the player
+     * @return the replacement text.
+     */
     @SuppressWarnings("ConstantConditions")
     private String callBack(String result, Player player) {
         if (!holderLookup.containsKey(result)) return "";
@@ -92,10 +103,17 @@ class Placeholder {
 
     }
 
-    public Placeholder getInstance() {
+    protected Placeholder getInstance() {
         return instance;
     }
 
+    /**
+     * Gets a list of place holders by specfic {@link HolderType} .
+     * <p>Currently this is only player related and all default minecraft stats connected to a player.
+     *
+     * @param type the Holder object which to return all its place holders.
+     * @return the holder
+     */
     @SuppressWarnings("ConstantConditions")
     public List<String> getHolder(HolderType type) {
 

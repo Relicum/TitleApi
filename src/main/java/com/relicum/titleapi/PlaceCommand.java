@@ -18,7 +18,7 @@
 
 package com.relicum.titleapi;
 
-import com.relicum.titleapi.Components.MSerialize;
+import com.relicum.titleapi.Components.ChatSerialize;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -69,12 +69,12 @@ class PlaceCommand implements TabExecutor {
                 }
                 sender.sendMessage(ChatColor.GREEN + "The place holder is " + ChatColor.GOLD + strings[1]);
 
-                String message = "{player} the stat is {" + strings[1] + "}";
+                String message = "&9&o{player} the stat is {" + strings[1] + "}";
 
                 String result = placeholder.replaceAll(message, (Player) sender);
 
                 try {
-                    StandardTitle.get().fadeIn(10).stay(60).fadeOut(10).title(MSerialize.serializer(result)).clear().send((Player) sender);
+                    StandardTitle.get().fadeIn(-1).stay(60).fadeOut(-1).title(ChatSerialize.serializer(result)).clear().send((Player) sender);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

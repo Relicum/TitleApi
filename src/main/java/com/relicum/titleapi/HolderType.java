@@ -19,7 +19,7 @@
 package com.relicum.titleapi;
 
 /**
- * Name: HolderType.java Created: 06 November 2014
+ * HolderType represents the different types of placeholder groups.
  *
  * @author Relicum
  * @version 0.0.1

@@ -21,7 +21,7 @@ package com.relicum.titleapi.Components;
 /**
  * TitleTimes is used to create the values for a Times packets.
  * <p>Both fade in and fade out are optional and set to -1 as default which means there is not any animation.
- * <p>All times are represented in ticks.
+ * <p>All times are represented in ticks. Call {@link TitleTimes.TitleTimesBuilder#build()} to be the instance of {@link com.relicum.titleapi.Components.TitleTimes}
  *
  * @author Relicum
  * @version 0.0.1
@@ -32,10 +32,10 @@ public class TitleTimes {
     private int stay = 60;
     private int fadeOut = -1;
 
-    private TitleTimes(Builder builder) {
-        fadeIn = builder.fadeIn;
-        stay = builder.stay;
-        fadeOut = builder.fadeOut;
+    private TitleTimes(TitleTimesBuilder titleTimesBuilder) {
+        fadeIn = titleTimesBuilder.fadeIn;
+        stay = titleTimesBuilder.stay;
+        fadeOut = titleTimesBuilder.fadeOut;
     }
 
     /**
@@ -43,8 +43,8 @@ public class TitleTimes {
      *
      * @return the builder
      */
-    public static Builder newBuilder() {
-        return new Builder();
+    public static TitleTimesBuilder newBuilder() {
+        return new TitleTimesBuilder();
     }
 
     /**
@@ -75,12 +75,12 @@ public class TitleTimes {
     }
 
 
-    public static final class Builder {
+    public static final class TitleTimesBuilder {
         private int fadeIn;
         private int stay;
         private int fadeOut;
 
-        private Builder() {
+        private TitleTimesBuilder() {
         }
 
         /**
@@ -92,7 +92,7 @@ public class TitleTimes {
          * @param fadeIn The amount of ticks (1/20 second) for the fade in effect.
          * @return This title configuration.
          */
-        public Builder withFadeIn(int fadeIn) {
+        public TitleTimesBuilder withFadeIn(int fadeIn) {
             this.fadeIn = fadeIn;
             return this;
         }
@@ -106,7 +106,7 @@ public class TitleTimes {
          * @param stay The amount of ticks (1/20 second) for the fade in effect.
          * @return This title configuration.
          */
-        public Builder withStay(int stay) {
+        public TitleTimesBuilder withStay(int stay) {
             this.stay = stay;
             return this;
         }
@@ -118,7 +118,7 @@ public class TitleTimes {
          * @param fadeOut The amount of ticks (1/20 second) for the fade out effect.
          * @return This title configuration.
          */
-        public Builder withFadeOut(int fadeOut) {
+        public TitleTimesBuilder withFadeOut(int fadeOut) {
             this.fadeOut = fadeOut;
             return this;
         }

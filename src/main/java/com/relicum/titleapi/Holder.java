@@ -26,12 +26,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Name: Holder.java Created: 06 November 2014
+ * Holder is the base class for defining different groups of placeholder objects.
+ * <p>This class needs to be extended and impliment the {@link #replaceAndReturn(String, org.bukkit.entity.Player)} method.
+ * <p>For an example see {@link com.relicum.titleapi.PlayerHolder}
  *
  * @author Relicum
  * @version 0.0.1
  */
-abstract class Holder {
+public abstract class Holder {
 
     private List<String> placeholders;
 
