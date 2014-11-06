@@ -3,3 +3,8 @@ main: com.relicum.titleapi.TitleApi
 author: Relicum
 version: ${project.version}
 description: Title Api for displaying Titles and Tabs
+commands:
+  testholder:
+    description: Used to test out place holders
+    usage: /<command> [type] [placeholder]
+    default: op

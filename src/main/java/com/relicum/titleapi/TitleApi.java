@@ -22,7 +22,11 @@ package com.relicum.titleapi;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -45,6 +49,8 @@ public class TitleApi extends JavaPlugin implements Listener {
     private List<String> pluginNames = new ArrayList<>();
     private Map<UUID, Integer> playerVersion = Collections.synchronizedMap(new HashMap<>());
     private boolean beingUsed;
+    private TabExecutor cmd;
+    private Placeholder placeholder;
 
     @Override
     public void onEnable() {
@@ -96,6 +102,34 @@ public class TitleApi extends JavaPlugin implements Listener {
 
     }
 
+    /**
+     * Replace holders.
+     *
+     * @param message the message
+     * @param player  the player
+     * @return the string
+     */
+    public String replaceHolders(String message, Player player) {
+
+        if (placeholder == null)
+            setUpPlaceHolders();
+
+        return placeholder.replaceAll(message, player);
+    }
+
+    protected void setUpPlaceHolders() {
+
+        placeholder = new Placeholder(this);
+        placeholder.registerHolder(new PlayerHolder(HolderType.PLAYER, this));
+        placeholder.registerHolder(new StatsHolder(HolderType.STATS, this));
+
+        cmd = new PlaceCommand(placeholder.getHolder(HolderType.PLAYER), placeholder.getHolder(HolderType.STATS), placeholder);
+        getCommand("testholder").setExecutor(cmd);
+        getCommand("testholder").setTabCompleter(cmd);
+
+    }
+
+
     @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent e) {
 
@@ -124,5 +158,11 @@ public class TitleApi extends JavaPlugin implements Listener {
         if (i == 47) {
             return true;
         } else return false;
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+
+        return true;
     }
 }

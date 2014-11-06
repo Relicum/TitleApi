@@ -16,11 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.relicum.titleapi.Components;
+package com.relicum.titleapi;
 
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.spigotmc.ProtocolInjector;
 
 /**
  * TitleSender used to send a single Title to the specified player.
@@ -34,18 +33,20 @@ import org.spigotmc.ProtocolInjector;
 public class TitleSender {
 
     private CraftPlayer p;
+    private Boolean playerSet = false;
     private Integer[] times = new Integer[3];
     private String theTitle;
     private String theSubTitle = "";
-    private boolean useTimes = false;
-    private boolean useTitle = false;
-    private boolean useSubTitle = false;
-    private boolean useClear = false;
-    private boolean useReset = false;
+    private Boolean useTimes = false;
+    private Boolean useTitle = false;
+    private Boolean useSubTitle = false;
+    private Boolean useClear = false;
+    private Boolean useReset = false;
 
     private TitleSender(Player player) {
 
         this.p = (CraftPlayer) player;
+        this.playerSet = true;
     }
 
     /**
@@ -59,11 +60,12 @@ public class TitleSender {
     }
 
     /**
-     * Sets times.
+     * Set for times for fade in, stay and fade out.
+     * <p>All times are in ticks, set to -1 to not set a field.
      *
-     * @param in  the in
-     * @param st  the st
-     * @param out the out
+     * @param in  the fade in time.
+     * @param st  the time the message stays displayed.
+     * @param out the fade out time.
      * @return instance of itself for chaining.
      */
     public TitleSender setTimes(int in, int st, int out) {
@@ -126,10 +128,14 @@ public class TitleSender {
         return this;
     }
 
+
     /**
      * Create Title and display to player.
      */
-    public void send() {
+    public void send() throws Exception {
+
+        if (!playerSet) throw new Exception("No player is set");
+
 
         if (useClear) {
             sendClearPacket();
@@ -154,14 +160,15 @@ public class TitleSender {
 
     private void sendTitle() {
 
-        p.getHandle().playerConnection.sendPacket(new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.TITLE, MSerialize.serializer(theTitle)));
+        // p.getHandle().playerConnection.sendPacket(new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.TITLE, MSerialize.serializer(theTitle)));
+        p.getHandle().playerConnection.sendPacket(ActionPackets.getTitle(theTitle));
 
     }
 
     private void sendSubTitle() {
 
-        p.getHandle().playerConnection.sendPacket(new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.SUBTITLE, MSerialize.serializer(theSubTitle)));
-
+        //p.getHandle().playerConnection.sendPacket(new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.SUBTITLE, MSerialize.serializer(theSubTitle)));
+        p.getHandle().playerConnection.sendPacket(ActionPackets.getSubTitle(theSubTitle));
     }
 
     private void sendTimes() {
@@ -180,5 +187,14 @@ public class TitleSender {
 
 
         p.getHandle().playerConnection.sendPacket(ActionPackets.getReset());
+    }
+
+    /**
+     * Sets new p.
+     *
+     * @param p New value of p.
+     */
+    public void setP(Player p) {
+        this.p = (CraftPlayer) p;
     }
 }

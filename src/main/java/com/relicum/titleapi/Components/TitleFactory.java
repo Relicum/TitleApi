@@ -18,30 +18,24 @@
 
 package com.relicum.titleapi.Components;
 
-import org.spigotmc.ProtocolInjector;
-
 /**
- * ActionPackets
+ * Name: TitleFactory.java Created: 06 November 2014
  *
  * @author Relicum
  * @version 0.0.1
  */
-public class ActionPackets {
+public class TitleFactory {
 
-    public static ProtocolInjector.PacketTitle getTimes(int fadeIn, int stay, int fadeOut) {
-
-        return new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.TIMES, fadeIn, stay, fadeOut);
+    private TitleFactory() {
     }
 
-    public static ProtocolInjector.PacketTitle getReset() {
+/*    public static Title getStandardTitle(){
 
-        return new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.RESET);
+       return StandardTitle.get();
     }
 
-    public static ProtocolInjector.PacketTitle getClear() {
+    public static BasicTitle getNewBasicTitle(){
 
-        return new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.CLEAR);
-    }
-
-
+        return BasicTitle.get();
+    }*/
 }

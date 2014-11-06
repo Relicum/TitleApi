@@ -18,15 +18,18 @@
 
 package com.relicum.titleapi;
 
-import com.relicum.titleapi.Components.ActionPackets;
-import com.relicum.titleapi.Components.TitleSender;
+import com.relicum.titleapi.Components.*;
 import lombok.Getter;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_7_R4.ChatBaseComponent;
+import net.minecraft.server.v1_7_R4.IChatBaseComponent;
+import net.minecraft.server.v1_7_R4.PacketPlayOutChat;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.spigotmc.ProtocolInjector;
 
 /**
- * API provides access to various methods to send Title, Tab Header and Action Bar messages.
+ * API provides access to various methods to send Title, Tab Headers and Action Bar messages.
  * <p>For more information about Titles and their various options see <a href="http://minecraft.gamepedia.com/Commands#title">Minecraft Wiki</a>
  *
  * @author Relicum
@@ -37,13 +40,18 @@ public class API {
     @Getter
     private final Plugin plugin;
 
+    private final ProtocolInjector.PacketTitle reset;
+
+    private final ProtocolInjector.PacketTitle clear;
+
     private final String testMessage;
 
     protected API(Plugin plugin) {
         this.plugin = plugin;
+        this.reset = ActionPackets.getReset();
+        this.clear = ActionPackets.getClear();
         testMessage = "Test Message Successful";
     }
-
 
     /**
      * Used purely as a test method to see if you have successfully created a API instance.
@@ -93,6 +101,56 @@ public class API {
         return ActionPackets.getTimes(fadeIn, stay, fadeOut);
     }
 
+    /**
+     * Get Title Packet
+     * <p>Use <strong>&amp;</strong> and the color code to add color eg <strong>&amp;4</strong> for dark red.
+     *
+     * @param message the message to display in the Title
+     * @return the ProtocolInjector.PacketTitle Title packet
+     */
+    public ProtocolInjector.PacketTitle getTitlePacket(String message) {
+
+        return ActionPackets.getTitle(message);
+    }
+
+    /**
+     * Get Sub Title Packet
+     * <p>Use <strong>&amp;</strong> and the color code to add color eg <strong>&amp;4</strong> for dark red.
+     *
+     * @param message the message to display in the Sub Title
+     * @return the ProtocolInjector.PacketTitle Title packet
+     */
+    public ProtocolInjector.PacketTitle getSubTitlePacket(String message) {
+
+        return ActionPackets.getSubTitle(message);
+    }
+
+    /**
+     * Get Tab Header and Footer packet.
+     * <p>Returns the packet with the header and footer message already serialized and colorized.
+     * <p>Use <strong>&amp;</strong> and the color code to add color eg <strong>&amp;4</strong> for dark red.
+     *
+     * @param header the header text
+     * @param footer the footer text
+     * @return the ProtocolInjector.PacketTabHeader packet.
+     */
+    public ProtocolInjector.PacketTabHeader getTabHeaderPacket(String header, String footer) {
+
+        return ActionPackets.getTab(header, footer);
+    }
+
+    /**
+     * Get Action Bar Packet.
+     * <p>Use <strong>&amp;</strong> and the color code to add color eg <strong>&amp;4</strong> for dark red.
+     *
+     * @param message the message to display on the action bar.
+     * @return the action bar packet {@link PacketPlayOutChat} .
+     */
+    public PacketPlayOutChat getActionBarPacket(String message) {
+
+        return ActionPackets.getActionBar(message);
+    }
+
     public boolean checkVersion(Player player) {
 
         return TitleApi.get().checkVersion(player.getUniqueId());
@@ -102,4 +160,89 @@ public class API {
 
         return TitleSender.get(player);
     }
+
+    public TitleBuilder getTitleBuilder() {
+        return TitleBuilder.get();
+    }
+
+    public TitlesSender getTitlesSender(TitleComponents components) {
+
+        return TitlesSender.get(components);
+    }
+
+    public IChatBaseComponent getIChatBaseComponent(String message) {
+
+        return MSerialize.serializer(message);
+    }
+
+    public ChatBaseComponent getChatComponent(String message) {
+
+        return MSerialize.serializerChat(message);
+    }
+
+    public TextComponent getTextComponent(String message) {
+
+        return BaseComponents.getTextComponent(message);
+    }
+
+    public MultiTitleBuilder getMultiTitleBuilder() {
+
+        return MultiTitleBuilder.get();
+    }
+
+    public MultiSender getMultiSender(MultiComponents components, long delay) {
+
+        return MultiSender.get(components, delay, getPlugin());
+    }
+
+    public TabBuilder getTabBuilder() {
+
+        return TabBuilder.get();
+    }
+
+    public TabSender getTabSender(IChatBaseComponent header, IChatBaseComponent footer) {
+
+        return TabSender.get(header, footer);
+    }
+
+    public void sendActionBar(Player player, String message) {
+
+        ActionBar.sendToPlayer(player, message);
+    }
+
+    public Title getTitle() {
+
+        return StandardTitle.get();
+    }
+
+    public Tab getTab() {
+
+        return StandardTab.get();
+    }
+
+    public BasicTitle getNewBasicTitle() {
+
+        return BasicTitle.get();
+    }
+
+    public void enablePlaceHolders() {
+
+        TitleApi.get().setUpPlaceHolders();
+    }
+
+    /**
+     * Replace all place holders in a string, to use this you need to first run {@link API#enablePlaceHolders()} .
+     * <p>Currently the place holders are built in and are not configurable directly.
+     * <p>Only enable if your are actually going to use them.
+     *
+     * @param message the message to have any place holders replaced
+     * @param player  the player
+     * @return the formatted string
+     */
+    public String replaceHolders(String message, Player player) {
+
+        return TitleApi.get().replaceHolders(message, player);
+    }
+
+
 }

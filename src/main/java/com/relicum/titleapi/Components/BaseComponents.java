@@ -20,41 +20,18 @@ package com.relicum.titleapi.Components;
 
 import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_7_R4.ChatBaseComponent;
-import net.minecraft.server.v1_7_R4.ChatSerializer;
-import net.minecraft.server.v1_7_R4.IChatBaseComponent;
-import net.minecraft.util.com.google.gson.Gson;
-import net.minecraft.util.com.google.gson.GsonBuilder;
 
 /**
- * MSerialize used internally to serialize messages and convert color codes.
+ * Name: BaseComponents.java Created: 04 November 2014
  *
  * @author Relicum
  * @version 0.0.1
  */
-public class MSerialize {
+public class BaseComponents {
 
-    Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
+    public static ChatBaseComponent getChatComponent(String message) {
 
-    public static String colorize(String string) {
-
-        return string.replaceAll("(&([a-fklmnor0-9]))", "\u00A7$2");
-    }
-
-    public static String textConvert(String message) {
-
-        return TextConverter.convert(colorize(message));
-    }
-
-    public static IChatBaseComponent serializer(String text) {
-
-        return ChatSerializer.a(TextConverter.convert(colorize(text)));
-
-    }
-
-    public static ChatBaseComponent serializerChat(String text) {
-
-        return (ChatBaseComponent) ChatSerializer.a(TextConverter.convert(colorize(text)));
-
+        return MSerialize.serializerChat(message);
     }
 
     public static TextComponent getTextComponent(String message) {
