@@ -1,4 +1,9 @@
-##TitleApi 1.0.3-SNAPSHOT
+##TitleApi 1.0.4-SNAPSHOT
+
+**Built using the best Java IDE around**
+
+[![Image of JetBrains](https://www.jetbrains.com/idea/docs/logo_intellij_idea.png)](https://www.jetbrains.com/idea/)
+
 ```
 REQUIRES
 * Latest Patch Spigot

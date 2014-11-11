@@ -45,7 +45,6 @@ public class TitleApi extends JavaPlugin implements Listener {
     private List<String> pluginNames = new ArrayList<>();
     private Map<UUID, Integer> playerVersion = Collections.synchronizedMap(new HashMap<>());
     private boolean beingUsed;
-    private TabExecutor cmd;
     private Placeholder placeholder;
 
     @Override
@@ -54,6 +53,7 @@ public class TitleApi extends JavaPlugin implements Listener {
         instance = this;
         beingUsed = false;
         Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "Title API is being enabled");
+
 
     }
 
@@ -98,6 +98,7 @@ public class TitleApi extends JavaPlugin implements Listener {
             return new API(plugin);
         }
 
+
     }
 
     /**
@@ -121,7 +122,7 @@ public class TitleApi extends JavaPlugin implements Listener {
         placeholder.registerHolder(new PlayerHolder(HolderType.PLAYER, this));
         placeholder.registerHolder(new StatsHolder(HolderType.STATS, this));
 
-        cmd = new PlaceCommand(placeholder.getHolder(HolderType.PLAYER), placeholder.getHolder(HolderType.STATS), placeholder);
+        TabExecutor cmd = new PlaceCommand(placeholder.getHolder(HolderType.PLAYER), placeholder.getHolder(HolderType.STATS), placeholder);
         getCommand("testholder").setExecutor(cmd);
         getCommand("testholder").setTabCompleter(cmd);
 
@@ -152,5 +153,6 @@ public class TitleApi extends JavaPlugin implements Listener {
             return true;
         } else return false;
     }
+
 
 }
