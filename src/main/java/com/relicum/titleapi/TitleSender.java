@@ -19,12 +19,12 @@
 package com.relicum.titleapi;
 
 import com.relicum.titleapi.Components.TitleComponents;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import com.relicum.titleapi.Exception.ReflectionException;
 import org.bukkit.entity.Player;
 
 /**
  * TitleSender is a quick and easy class to send Titles to a player, this class is meant to be used in conjunction with.
- * <p>{@link com.relicum.titleapi.Components.TitleBuilder} and {@link com.relicum.titleapi.Components.TitleComponents} .
+ * <p>{@link com.relicum.titleapi.Components.TitleBuilderOld} and {@link com.relicum.titleapi.Components.TitleComponents} .
  * <p>The 3 class combine to provide a way to persist the values to disk load them from disk and directly send it to players.
  *
  * @author Relicum
@@ -32,7 +32,7 @@ import org.bukkit.entity.Player;
  */
 public class TitleSender {
 
-    private CraftPlayer p;
+    private Player p;
     private boolean playerSet = false;
     private TitleComponents components;
 
@@ -56,7 +56,7 @@ public class TitleSender {
      * @param player the player
      */
     public void setPlayer(Player player) {
-        this.p = (CraftPlayer) player;
+        this.p = player;
         this.playerSet = true;
     }
 
@@ -87,33 +87,32 @@ public class TitleSender {
     }
 
 
-    private void sendTitle() {
+    private void sendTitle() throws ReflectionException {
 
-        p.getHandle().playerConnection.sendPacket(ActionPackets.getTitle(components.getTheTitle()));
+        PacketSender.sendTitlePacket(p, ActionPackets.getTitle(components.getTheTitle()));
 
     }
 
-    private void sendSubTitle() {
+    private void sendSubTitle() throws ReflectionException {
 
-        p.getHandle().playerConnection.sendPacket(ActionPackets.getSubTitle(components.getTheSubTitle()));
+        PacketSender.sendTitlePacket(p, ActionPackets.getSubTitle(components.getTheTitle()));
     }
 
-    private void sendTimes() {
+    private void sendTimes() throws ReflectionException {
 
-        p.getHandle().playerConnection.sendPacket(ActionPackets.getTimes(components.getFadeIn(), components.getStay(), components.getFadeOut()));
+        PacketSender.sendTitlePacket(p, ActionPackets.getTimes(components.getFadeIn(), components.getStay(), components.getFadeOut()));
     }
 
 
     private void sendClearPacket() {
 
-        p.getHandle().playerConnection.sendPacket(ActionPackets.getClear());
+
     }
 
 
     private void sendResetPacket() {
 
 
-        p.getHandle().playerConnection.sendPacket(ActionPackets.getReset());
     }
 
 

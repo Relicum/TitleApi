@@ -21,17 +21,13 @@ package com.relicum.titleapi;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Name: TitleApi.java Created: 03 November 2014
@@ -43,7 +39,6 @@ public class TitleApi extends JavaPlugin implements Listener {
 
     private static TitleApi instance;
     private List<String> pluginNames = new ArrayList<>();
-    private Map<UUID, Integer> playerVersion = Collections.synchronizedMap(new HashMap<>());
     private boolean beingUsed;
     private Placeholder placeholder;
 
@@ -54,13 +49,14 @@ public class TitleApi extends JavaPlugin implements Listener {
         beingUsed = false;
         Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "Title API is being enabled");
 
+        setUpPlaceHolders();
 
     }
 
     @Override
     public void onDisable() {
         pluginNames.clear();
-        playerVersion.clear();
+
     }
 
     public static TitleApi get() {
@@ -69,16 +65,16 @@ public class TitleApi extends JavaPlugin implements Listener {
     }
 
     /**
-     * Get an instance of {@link com.relicum.titleapi.API} .
-     * <p>You must use this method to be a new instance of {@link com.relicum.titleapi.API} you can not directly
+     * Get an instance of {@link TitleMaker} .
+     * <p>You must use this method to be a new instance of {@link TitleMaker} you can not directly
      * instantiate a new instance as it is protected.
      * <p>A plugin can not create more than one instance of TitleApi.
      *
      * @param plugin your plugin
-     * @return the new instance of {@link com.relicum.titleapi.API}
+     * @return the new instance of {@link TitleMaker}
      * @throws java.lang.Exception if a plugin tries to create multiple instances of TitleApi
      */
-    public API getTitleApi(Plugin plugin) throws Exception {
+    public TitleMaker getTitleApi(Plugin plugin) throws Exception {
 
 
         if (pluginNames.contains(plugin.getName())) {
@@ -95,7 +91,7 @@ public class TitleApi extends JavaPlugin implements Listener {
 
             pluginNames.add(plugin.getName());
             plugin.getLogger().info("TitleApi Successfully Hooked");
-            return new API(plugin);
+            return new TitleMaker(plugin);
         }
 
 
@@ -125,34 +121,8 @@ public class TitleApi extends JavaPlugin implements Listener {
         TabExecutor cmd = new PlaceCommand(placeholder.getHolder(HolderType.PLAYER), placeholder.getHolder(HolderType.STATS), placeholder);
         getCommand("testholder").setExecutor(cmd);
         getCommand("testholder").setTabCompleter(cmd);
-
+        getCommand("testbar").setExecutor(cmd);
+        getCommand("testtab").setExecutor(cmd);
     }
-
-
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onJoin(PlayerJoinEvent e) {
-
-        playerVersion.put(e.getPlayer().getUniqueId(), ((CraftPlayer) e.getPlayer()).getHandle().playerConnection.networkManager.getVersion());
-    }
-
-    @EventHandler
-    public void onQuit(PlayerQuitEvent e) {
-
-        if (!playerVersion.containsKey(e.getPlayer().getUniqueId())) return;
-
-        playerVersion.remove(e.getPlayer().getUniqueId());
-    }
-
-    public boolean checkVersion(UUID uuid) {
-
-        // if(!playerVersion.containsKey(uuid))return false;
-
-        Integer i = playerVersion.get(uuid);
-
-        if (i == 47) {
-            return true;
-        } else return false;
-    }
-
 
 }

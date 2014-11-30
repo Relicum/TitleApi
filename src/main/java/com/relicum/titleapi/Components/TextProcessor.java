@@ -103,6 +103,7 @@ public class TextProcessor {
      * <p>This will strip color from all valid matches in the entire string passed to it.
      *
      * @param string the string to remove color from
+     * @param find   the character to search for.
      * @return the string stripped of all color.
      */
     public static String stripColor(String string, String find) {

@@ -18,25 +18,13 @@
 
 package com.relicum.titleapi;
 
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
-import org.bukkit.entity.Player;
-
 /**
- * ActionBar senders messages that are displayed in the users Action Bar
+ * TitleAction this mirrors an internal NMS class this is used to define the actions related to a Title.
+ * <p>The reason to mirror the class is to make it easier to have full reflection of the package.
  *
  * @author Relicum
  * @version 0.0.1
  */
-public class ActionBar {
-
-    /**
-     * Set the Action Bar message for the specified player.
-     *
-     * @param player  the {@link org.bukkit.entity.Player}
-     * @param message the message to display in the action bar.
-     */
-    public static void sendToPlayer(Player player, String message) {
-
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(ActionPackets.getActionBar(message));
-    }
+public enum TitleAction {
+    TITLE, SUBTITLE, TIMES, CLEAR, RESET
 }

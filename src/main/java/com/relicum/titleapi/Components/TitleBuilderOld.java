@@ -19,14 +19,14 @@
 package com.relicum.titleapi.Components;
 
 /**
- * TitleBuilder is used to pass in all the values needed to create a Titles packet and Transform it into a instance of {@link com.relicum.titleapi.Components.TitleComponents} .
+ * TitleBuilderOld is used to pass in all the values needed to create a Titles packet and Transform it into a instance of {@link com.relicum.titleapi.Components.TitleComponents} .
  * <p>This is useful when you want to save the values to disk as {@link com.relicum.titleapi.Components.TitleComponents} implements {@link org.bukkit.configuration.serialization.ConfigurationSerializable}
  * <p>Use <strong>&amp;</strong> and the color code to add color eg <strong>&amp;4</strong> for dark red.
  *
  * @author Relicum
  * @version 0.0.1
  */
-public class TitleBuilder {
+public class TitleBuilderOld {
 
     private Integer fadeIn = -1;
     private Integer stay = 60;
@@ -39,17 +39,17 @@ public class TitleBuilder {
     private boolean useClear = false;
     private boolean useReset = false;
 
-    private TitleBuilder() {
+    private TitleBuilderOld() {
 
     }
 
     /**
-     * Get new instance of TitleBuilder
+     * Get new instance of TitleBuilderOld
      *
      * @return instance of itself for chaining
      */
-    public static TitleBuilder get() {
-        return new TitleBuilder();
+    public static TitleBuilderOld get() {
+        return new TitleBuilderOld();
     }
 
     /**
@@ -61,7 +61,7 @@ public class TitleBuilder {
      * @param out the fade out length in ticks.
      * @return instance of itself for chaining.
      */
-    public TitleBuilder withTimes(int in, int st, int out) {
+    public TitleBuilderOld withTimes(int in, int st, int out) {
         this.fadeIn = in;
         this.stay = st;
         this.fadeOut = out;
@@ -78,7 +78,7 @@ public class TitleBuilder {
      * @param theTitle the the title text.
      * @return instance of itself for chaining.
      */
-    public TitleBuilder withTitle(String theTitle) {
+    public TitleBuilderOld withTitle(String theTitle) {
         this.theTitle = theTitle;
         this.useTitle = true;
         return this;
@@ -91,7 +91,7 @@ public class TitleBuilder {
      * @param theSubTitle the the sub title text.
      * @return instance of itself for chaining.
      */
-    public TitleBuilder withSubTitle(String theSubTitle) {
+    public TitleBuilderOld withSubTitle(String theSubTitle) {
         this.theSubTitle = theSubTitle;
         this.useSubTitle = true;
         return this;
@@ -103,7 +103,7 @@ public class TitleBuilder {
      * @param Clear set to true to have a clear packet sent.
      * @return instance of itself for chaining.
      */
-    public TitleBuilder withClear(boolean Clear) {
+    public TitleBuilderOld withClear(boolean Clear) {
         this.useClear = Clear;
         return this;
     }
@@ -114,7 +114,7 @@ public class TitleBuilder {
      * @param Reset set to true to have a reset packet sent.
      * @return instance of itself for chaining.
      */
-    public TitleBuilder withReset(boolean Reset) {
+    public TitleBuilderOld withReset(boolean Reset) {
         this.useReset = Reset;
         return this;
     }

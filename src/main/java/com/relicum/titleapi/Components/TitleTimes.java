@@ -22,7 +22,7 @@ package com.relicum.titleapi.Components;
  * TitleTimes is used to create the values for a Times packets.
  * <p>Both fade in and fade out are optional and set to -1 as default which means there is not any animation.
  * <p>All times are represented in ticks. Call {@link TitleTimes.TitleTimesBuilder#build()} to be the instance of {@link com.relicum.titleapi.Components.TitleTimes}
- * <p>This object can be passed directly to {@link com.relicum.titleapi.API#getTimesPacket(TitleTimes)} to create a Times packet.
+ * <p>This object can be passed directly to {@link com.relicum.titleapi.TitleMaker#getTimesPacket(TitleTimes)} to create a Times packet.
  *
  * @author Relicum
  * @version 0.0.1

@@ -18,7 +18,6 @@
 
 package com.relicum.titleapi;
 
-import com.relicum.titleapi.Components.ChatSerialize;
 import com.relicum.titleapi.Components.TitleTimes;
 
 /**
@@ -126,7 +125,7 @@ public class BasicTitle {
      */
     public BasicTitle withTitle(String text) {
 
-        title.title(ChatSerialize.serializer(text));
+        title.title(text);
 
         return this;
     }
@@ -139,7 +138,7 @@ public class BasicTitle {
      */
     public BasicTitle withSubTitle(String text) {
 
-        title.subTitle(ChatSerialize.serializer(text));
+        title.subTitle(text);
         return this;
     }
 

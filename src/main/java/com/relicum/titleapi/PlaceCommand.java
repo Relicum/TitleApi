@@ -18,7 +18,7 @@
 
 package com.relicum.titleapi;
 
-import com.relicum.titleapi.Components.ChatSerialize;
+import com.relicum.titleapi.Exception.ReflectionException;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -72,16 +72,40 @@ class PlaceCommand implements TabExecutor {
                 String message = "&9&o{player} the stat is {" + strings[1] + "}";
 
                 String result = placeholder.replaceAll(message, (Player) sender);
-
                 try {
-                    StandardTitle.get().fadeIn(-1).stay(60).fadeOut(-1).title(ChatSerialize.serializer(result)).clear().send((Player) sender);
-                } catch (Exception e) {
+                    //PacketSender.sendTitlePacket((Player)sender,ActionPackets.getTimes(10,100,10));
+                    PacketSender.sendTitlePacket((Player) sender, ActionPackets.getSubTitle(result));
+
+                    PacketSender.sendTitlePacket((Player) sender, ActionPackets.getTitleWithTimes(result, 50, 120, 50));
+                } catch (ReflectionException e) {
                     e.printStackTrace();
                 }
 
                 return true;
             }
 
+        }
+
+        if (command.getName().equalsIgnoreCase("testbar")) {
+            Player player = (Player) sender;
+            try {
+                PacketSender.sendActionBarPacket(player, ActionPackets.getActionBar("&aThis is an action bar message"));
+            } catch (ReflectionException e) {
+                e.printStackTrace();
+            }
+
+            return true;
+        }
+
+        if (command.getName().equalsIgnoreCase("testtab")) {
+            Player player = (Player) sender;
+
+            try {
+                PacketSender.sendTabPacket(player, ActionPackets.getTab("&6This is the new header", "&aThis is the new footer"));
+            } catch (ReflectionException e) {
+                e.printStackTrace();
+            }
+            return true;
         }
 
         return false;

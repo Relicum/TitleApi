@@ -18,18 +18,24 @@
 
 package com.relicum.titleapi;
 
-import com.relicum.titleapi.Components.ChatSerialize;
 import com.relicum.titleapi.Components.TitleTimes;
-import net.minecraft.server.v1_7_R4.PacketPlayOutChat;
-import org.spigotmc.ProtocolInjector;
+import com.relicum.titleapi.Exception.ReflectionException;
+import com.relicum.titleapi.Reflection.WrappedChatPacket;
+import com.relicum.titleapi.Reflection.WrappedChatSerializer;
+import com.relicum.titleapi.Reflection.WrappedHeaderFooter;
+import com.relicum.titleapi.Reflection.WrappedTitlePacket;
+
 
 /**
  * Action packets creates the different packets used to send Titles, Tabs and Action bar messages.
- * <p>Access to these methods can be found in the {@link com.relicum.titleapi.API} class.
+ * <p>Access to these methods can be found in the {@link TitleMaker} class.
  *
  * @author Relicum
  */
 public class ActionPackets {
+
+    private ActionPackets() {
+    }
 
     /**
      * Get the packet for the times for fade in, stay and fade out.
@@ -38,88 +44,141 @@ public class ActionPackets {
      * @param fadeIn  the fade in animation length
      * @param stay    the length of time the title stays displayed
      * @param fadeOut the fade out animation length.
-     * @return the {@link org.spigotmc.ProtocolInjector.PacketTitle} packet for times.
+     * @return the times
+     * @throws ReflectionException if an error occurs
      */
-    protected static ProtocolInjector.PacketTitle getTimes(int fadeIn, int stay, int fadeOut) {
+    protected static WrappedTitlePacket getTimes(int fadeIn, int stay, int fadeOut) throws ReflectionException {
 
-        return new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.TIMES, fadeIn, stay, fadeOut);
+        return new WrappedTitlePacket(fadeIn, stay, fadeOut);
     }
 
     /**
      * Get the packet for the times for fade in, stay and fade out.
      * <p>All times are in ticks, set to -1 to not set a field.
      *
-     * @param titleTimes instance of {@link com.relicum.titleapi.Components.TitleTimes}
-     * @return the {@link org.spigotmc.ProtocolInjector.PacketTitle} packet for times.
+     * @param titleTimes the title times {@link TitleTimes}
+     * @return WrappedTitlePacket
+     * @throws ReflectionException if an error occurs.
      */
-    protected static ProtocolInjector.PacketTitle getTimes(TitleTimes titleTimes) {
+    protected static WrappedTitlePacket getTimes(TitleTimes titleTimes) throws ReflectionException {
 
-        return new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.TIMES, titleTimes.getFadeIn(), titleTimes.getStay(), titleTimes.getFadeOut());
+        return new WrappedTitlePacket(titleTimes.getFadeIn(), titleTimes.getStay(), titleTimes.getFadeOut());
     }
 
+
     /**
-     * Gets reset.
+     * Get the reset packet, which resets the timings back to default.
      *
-     * @return the reset
+     * @return WrappedTitlePacket
+     * @throws ReflectionException if an error occurs
      */
-    protected static ProtocolInjector.PacketTitle getReset() {
+    protected static WrappedTitlePacket getReset() throws ReflectionException {
 
-        return new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.RESET);
+        return new WrappedTitlePacket(TitleAction.RESET);
     }
 
+
     /**
-     * Gets clear.
+     * Get a clear packet.
      *
-     * @return the clear
+     * @return WrappedTitlePacket
+     * @throws ReflectionException if an error occurs
      */
-    protected static ProtocolInjector.PacketTitle getClear() {
+    protected static WrappedTitlePacket getClear() throws ReflectionException {
 
-        return new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.CLEAR);
+        return new WrappedTitlePacket(TitleAction.CLEAR);
     }
 
     /**
-     * Get title.
-     *
-     * @param message the message
-     * @return the protocol injector . packet title
-     */
-    protected static ProtocolInjector.PacketTitle getTitle(String message) {
-
-        return new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.TITLE, ChatSerialize.serializer(message));
-    }
-
-    /**
-     * Get sub title.
+     * Get title packet.
      *
      * @param message the message
-     * @return the protocol injector . packet title
+     * @return WrappedTitlePacket
+     * @throws ReflectionException if an error occurs
      */
-    protected static ProtocolInjector.PacketTitle getSubTitle(String message) {
+    protected static WrappedTitlePacket getTitle(String message) throws ReflectionException {
 
-        return new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.SUBTITLE, ChatSerialize.serializer(message));
+        return new WrappedTitlePacket(TitleAction.TITLE, message);
     }
+
+    /**
+     * Get title packet with timings packet.
+     *
+     * @param message the message
+     * @param fadeIn  the fade in animation length
+     * @param stay    the length of time the title stays displayed
+     * @param fadeOut the fade out animation length.
+     * @return the title packet.
+     * @throws ReflectionException if an error occurs
+     */
+    protected static WrappedTitlePacket getTitleWithTimes(String message, int fadeIn, int stay, int fadeOut) throws ReflectionException {
+
+        return new WrappedTitlePacket(TitleAction.TITLE, message, fadeIn, stay, fadeOut);
+    }
+
+
+    /**
+     * Get Subtitle packet.
+     *
+     * @param message the message
+     * @return WrappedTitlePacket
+     * @throws ReflectionException if an error occurs.
+     */
+    protected static WrappedTitlePacket getSubTitle(String message) throws ReflectionException {
+
+        return new WrappedTitlePacket(TitleAction.SUBTITLE, message);
+
+    }
+
+    /**
+     * Gets SubTitle with timings packet.
+     *
+     * @param message the message
+     * @param fadeIn  the fade in animation length
+     * @param stay    the length of time the title stays displayed
+     * @param fadeOut the fade out animation length.
+     * @return WrappedTitlePacket
+     * @throws ReflectionException if an error occurs.
+     */
+    protected static WrappedTitlePacket getSubTitleWithTimes(String message, int fadeIn, int stay, int fadeOut) throws ReflectionException {
+
+        return new WrappedTitlePacket(TitleAction.SUBTITLE, message, fadeIn, stay, fadeOut);
+    }
+
 
     /**
      * Get packet for sending Tab header and Footer displays.
      *
-     * @param header the header
-     * @param footer the footer
-     * @return the {@link org.spigotmc.ProtocolInjector.PacketTabHeader} tab packet.
+     * @param header the header in string format
+     * @param footer the footer in string format
+     * @return the tab packet.
      */
-    protected static ProtocolInjector.PacketTabHeader getTab(String header, String footer) {
-
-        return new ProtocolInjector.PacketTabHeader(ChatSerialize.serializer(header), ChatSerialize.serializer(footer));
+    protected static WrappedHeaderFooter getTab(String header, String footer) {
+        try {
+            return new WrappedHeaderFooter(header, footer);
+        } catch (ReflectionException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
+
 
     /**
      * Get Action Bar Packet
      *
      * @param message the message to display on the action bar.
-     * @return the action bar packet {@link net.minecraft.server.v1_7_R4.PacketPlayOutChat} .
+     * @return the action bar packet {@link WrappedChatPacket} .
      */
-    protected static PacketPlayOutChat getActionBar(String message) {
+    protected static WrappedChatPacket getActionBar(String message) {
 
-        return new PacketPlayOutChat(ChatSerialize.serializer(message), 2);
+        try {
+            WrappedChatSerializer wcs = new WrappedChatSerializer();
+
+            return new WrappedChatPacket(wcs.serialize(message), true);
+        } catch (ReflectionException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

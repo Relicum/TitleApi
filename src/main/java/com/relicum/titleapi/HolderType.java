@@ -27,5 +27,6 @@ package com.relicum.titleapi;
 public enum HolderType {
 
     PLAYER,
-    STATS
+    STATS,
+    SERVER
 }

@@ -19,10 +19,7 @@
 package com.relicum.titleapi;
 
 import com.relicum.titleapi.Components.Title;
-import net.minecraft.server.v1_7_R4.IChatBaseComponent;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.spigotmc.ProtocolInjector;
 
 /**
  * StandardTitle
@@ -32,8 +29,8 @@ import org.spigotmc.ProtocolInjector;
  */
 public class StandardTitle implements Title {
 
-    private IChatBaseComponent titleText;
-    private IChatBaseComponent subTitleText;
+    private String titleText;
+    private String subTitleText;
     private Integer fadeIn;
     private Integer stay;
     private Integer fadeOut;
@@ -55,7 +52,7 @@ public class StandardTitle implements Title {
      * {@inheritDoc}
      */
     @Override
-    public Title title(IChatBaseComponent text) {
+    public Title title(String text) {
         this.titleText = text;
         this.useTitle = true;
         return this;
@@ -65,7 +62,7 @@ public class StandardTitle implements Title {
      * {@inheritDoc}
      */
     @Override
-    public Title subTitle(IChatBaseComponent text) {
+    public Title subTitle(String text) {
         this.subTitleText = text;
         this.useSub = true;
         return this;
@@ -131,21 +128,8 @@ public class StandardTitle implements Title {
      */
     @Override
     public Title send(Player player) {
-        CraftPlayer craftPlayer = (CraftPlayer) player;
-        if (useClear)
-            craftPlayer.getHandle().playerConnection.sendPacket(ActionPackets.getClear());
 
-        if (useReset)
-            craftPlayer.getHandle().playerConnection.sendPacket(ActionPackets.getReset());
 
-        craftPlayer.getHandle().playerConnection.sendPacket(ActionPackets.getTimes(fadeIn, stay, fadeOut));
-
-        if (useTitle)
-            craftPlayer.getHandle().playerConnection.sendPacket(new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.TITLE, titleText));
-
-        if (useSub)
-            craftPlayer.getHandle().playerConnection.sendPacket(new ProtocolInjector.PacketTitle(ProtocolInjector.PacketTitle.Action.SUBTITLE, subTitleText));
-        craftPlayer = null;
         return this;
     }
 }

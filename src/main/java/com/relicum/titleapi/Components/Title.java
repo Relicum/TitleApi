@@ -18,7 +18,6 @@
 
 package com.relicum.titleapi.Components;
 
-import net.minecraft.server.v1_7_R4.IChatBaseComponent;
 import org.bukkit.entity.Player;
 
 /**
@@ -38,7 +37,7 @@ public interface Title {
      * @param text The text to use as the title.
      * @return This title configuration.
      */
-    public Title title(IChatBaseComponent text);
+    public Title title(String text);
 
     /**
      * Set the subtitle to send to the player.
@@ -46,7 +45,7 @@ public interface Title {
      * @param text The text to use as the subtitle.
      * @return This title configuration.
      */
-    public Title subTitle(IChatBaseComponent text);
+    public Title subTitle(String text);
 
     /**
      * Set the duration in ticks of the fade in effect of the title.

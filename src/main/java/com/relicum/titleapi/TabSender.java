@@ -16,12 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.relicum.titleapi.Components;
+package com.relicum.titleapi;
 
-import net.minecraft.server.v1_7_R4.IChatBaseComponent;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import com.relicum.titleapi.Exception.ReflectionException;
 import org.bukkit.entity.Player;
-import org.spigotmc.ProtocolInjector;
 
 /**
  * TabSender Simple Method to set Tab Header and Footer.
@@ -31,10 +29,10 @@ import org.spigotmc.ProtocolInjector;
  */
 public class TabSender {
 
-    private IChatBaseComponent header;
-    private IChatBaseComponent footer;
+    private String header;
+    private String footer;
 
-    private TabSender(IChatBaseComponent header, IChatBaseComponent footer) {
+    private TabSender(String header, String footer) {
         this.header = header;
         this.footer = footer;
     }
@@ -46,7 +44,7 @@ public class TabSender {
      * @param footer the footer
      * @return instance of itself for chaining.
      */
-    public static TabSender get(IChatBaseComponent header, IChatBaseComponent footer) {
+    public static TabSender get(String header, String footer) {
         return new TabSender(header, footer);
     }
 
@@ -54,10 +52,11 @@ public class TabSender {
      * Set the players Tab Header and Footer.
      *
      * @param player the {@link org.bukkit.entity.Player} to set the Tab header and footer for.
+     * @throws ReflectionException if an error occurs.
      */
-    public void sendToPlayer(Player player) {
+    public void sendToPlayer(Player player) throws ReflectionException {
 
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new ProtocolInjector.PacketTabHeader(header, footer));
+        PacketSender.sendTabPacket(player, ActionPackets.getTab(header, footer));
 
     }
 

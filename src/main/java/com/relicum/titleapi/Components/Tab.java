@@ -18,7 +18,6 @@
 
 package com.relicum.titleapi.Components;
 
-import net.minecraft.server.v1_7_R4.IChatBaseComponent;
 import org.bukkit.entity.Player;
 
 /**
@@ -35,7 +34,7 @@ public interface Tab {
      * @param text the text
      * @return instance of itself for chaining
      */
-    public Tab setHeader(IChatBaseComponent text);
+    public Tab setHeader(String text);
 
     /**
      * Sets the text for the tab foot
@@ -43,7 +42,7 @@ public interface Tab {
      * @param text the text to display on tab footer
      * @return instance of itself for chaining
      */
-    public Tab setFooter(IChatBaseComponent text);
+    public Tab setFooter(String text);
 
     /**
      * Send the Header and Footer to player

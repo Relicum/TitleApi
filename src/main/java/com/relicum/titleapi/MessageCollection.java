@@ -18,8 +18,9 @@
 
 package com.relicum.titleapi;
 
+import com.relicum.titleapi.Exception.ReflectionException;
+import com.relicum.titleapi.Reflection.WrappedTitlePacket;
 import org.bukkit.entity.Player;
-import org.spigotmc.ProtocolInjector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,9 +65,9 @@ public class MessageCollection {
         print();
     }
 
-    public List<ProtocolInjector.PacketTitle> getMessages() {
+    public List<WrappedTitlePacket> getMessages() throws ReflectionException {
 
-        List<ProtocolInjector.PacketTitle> tmp = new ArrayList<>();
+        List<WrappedTitlePacket> tmp = new ArrayList<>();
         for (ListIterator<String> iterator = messages.listIterator(); iterator.hasNext(); ) {
 
             tmp.add(ActionPackets.getTitle(iterator.next()));

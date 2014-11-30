@@ -19,7 +19,7 @@
 package com.relicum.titleapi;
 
 import com.relicum.titleapi.Components.MultiComponents;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import com.relicum.titleapi.Exception.ReflectionException;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -34,7 +34,7 @@ import org.bukkit.scheduler.BukkitTask;
 public class MultiSender {
 
     private MultiComponents components;
-    private CraftPlayer p;
+    private Player p;
     private boolean playerSet = false;
     private long delay;
     private Integer total;
@@ -54,7 +54,7 @@ public class MultiSender {
     }
 
     public void setPlayer(Player player) {
-        this.p = (CraftPlayer) player;
+        this.p = player;
         this.playerSet = true;
     }
 
@@ -89,44 +89,53 @@ public class MultiSender {
     public void sendFirst() {
 
         sendClearPacket();
-        sendTimes();
-        sendTitle();
-        sendSubTitle(components.getNextSubTitle(0));
+        try {
+            sendTimes();
+            sendTitle();
+            sendSubTitle(components.getNextSubTitle(0));
+        } catch (ReflectionException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
     public void send(Integer c) {
-        sendSubTitle(components.getNextSubTitle(c));
-        sendTimes();
+        try {
+            sendSubTitle(components.getNextSubTitle(c));
+            sendTimes();
+        } catch (ReflectionException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    private void sendTitle() {
+    private void sendTitle() throws ReflectionException {
 
-        p.getHandle().playerConnection.sendPacket(ActionPackets.getTitle(components.getTheTitle()));
+        PacketSender.sendTitlePacket(p, ActionPackets.getTitle(components.getTheTitle()));
 
     }
 
-    private void sendSubTitle(String message) {
+    private void sendSubTitle(String message) throws ReflectionException {
 
-        p.getHandle().playerConnection.sendPacket(ActionPackets.getSubTitle(message));
+        PacketSender.sendTitlePacket(p, ActionPackets.getSubTitle(components.getTheTitle()));
     }
 
-    private void sendTimes() {
+    private void sendTimes() throws ReflectionException {
 
-        p.getHandle().playerConnection.sendPacket(ActionPackets.getTimes(components.getFadeIn(), components.getStay(), components.getFadeOut()));
+        PacketSender.sendTitlePacket(p, ActionPackets.getTimes(components.getFadeIn(), components.getStay(), components.getFadeOut()));
     }
 
 
     private void sendClearPacket() {
 
-        p.getHandle().playerConnection.sendPacket(ActionPackets.getClear());
+
     }
 
 
     private void sendResetPacket() {
 
 
-        p.getHandle().playerConnection.sendPacket(ActionPackets.getReset());
     }
 
 

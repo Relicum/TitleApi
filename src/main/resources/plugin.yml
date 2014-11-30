@@ -8,3 +8,11 @@ commands:
     description: Used to test out place holders
     usage: /<command> [type] [placeholder]
     default: op
+  testbar:
+    description: Test actionbar
+    usage: /<command>
+    default: op
+  testtab:
+    description: Test tab
+    usage: /<command>
+    default: op

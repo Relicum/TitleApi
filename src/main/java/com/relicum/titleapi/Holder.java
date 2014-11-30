@@ -18,7 +18,7 @@
 
 package com.relicum.titleapi;
 
-import net.minecraft.util.org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.Validate;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 

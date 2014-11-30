@@ -18,11 +18,11 @@
 
 package com.relicum.titleapi;
 
-import net.minecraft.server.v1_7_R4.Packet;
-import net.minecraft.server.v1_7_R4.PacketPlayOutChat;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import com.relicum.titleapi.Reflection.WrappedChatPacket;
+import com.relicum.titleapi.Reflection.WrappedHeaderFooter;
+import com.relicum.titleapi.Reflection.WrappedPacket;
+import com.relicum.titleapi.Reflection.WrappedTitlePacket;
 import org.bukkit.entity.Player;
-import org.spigotmc.ProtocolInjector;
 
 import java.lang.ref.WeakReference;
 
@@ -40,7 +40,7 @@ import java.lang.ref.WeakReference;
  */
 public class WrappedPlayer {
 
-    private WeakReference<CraftPlayer> player;
+    private WeakReference<Player> player;
 
 
     /**
@@ -52,7 +52,7 @@ public class WrappedPlayer {
     public WrappedPlayer(Player play) {
 
 
-        this.player = new WeakReference<>((CraftPlayer) play);
+        this.player = new WeakReference<>(play);
 
     }
 
@@ -64,7 +64,7 @@ public class WrappedPlayer {
      */
     public void sendResetPacket() throws Exception {
 
-        sendPacket(ActionPackets.getReset());
+        PacketSender.sendTitlePacket(player.get(), ActionPackets.getReset());
 
     }
 
@@ -76,16 +76,16 @@ public class WrappedPlayer {
      */
     public void sendClearPacket() throws Exception {
 
-        sendPacket(ActionPackets.getClear());
+        PacketSender.sendTitlePacket(player.get(), ActionPackets.getClear());
     }
 
     /**
      * Send animation Times packet.
      *
-     * @param packetTimes the packet times
+     * @param packetTimes {@link WrappedTitlePacket}
      * @throws Exception the most like to indicate the player object has been de referenced.
      */
-    public void sendTimesPacket(ProtocolInjector.PacketTitle packetTimes) throws Exception {
+    public void sendTimesPacket(WrappedTitlePacket packetTimes) throws Exception {
 
         sendPacket(packetTimes);
     }
@@ -93,10 +93,10 @@ public class WrappedPlayer {
     /**
      * Send Title packet.
      *
-     * @param packetTitle ProtocolInjector.PacketTitle packet
+     * @param packetTitle {@link WrappedTitlePacket}
      * @throws Exception the most like to indicate the player object has been de referenced.
      */
-    public void sendTitlePacket(ProtocolInjector.PacketTitle packetTitle) throws Exception {
+    public void sendTitlePacket(WrappedTitlePacket packetTitle) throws Exception {
 
         sendPacket(packetTitle);
     }
@@ -104,10 +104,10 @@ public class WrappedPlayer {
     /**
      * Send SubTitle packet.
      *
-     * @param packetSubTitle the ProtocolInjector.PacketTitle packet
+     * @param packetSubTitle the {@link WrappedTitlePacket}
      * @throws Exception the most like to indicate the player object has been de referenced.
      */
-    public void sendSubTitlePacket(ProtocolInjector.PacketTitle packetSubTitle) throws Exception {
+    public void sendSubTitlePacket(WrappedTitlePacket packetSubTitle) throws Exception {
 
         sendPacket(packetSubTitle);
     }
@@ -115,10 +115,10 @@ public class WrappedPlayer {
     /**
      * Send TabHeader packet, Both header and footer must contain a value.
      *
-     * @param packetTabHeader ProtocolInjector.PacketTabHeader
+     * @param packetTabHeader {@link WrappedHeaderFooter}
      * @throws Exception the most like to indicate the player object has been de referenced.
      */
-    public void sendTabPacket(ProtocolInjector.PacketTabHeader packetTabHeader) throws Exception {
+    public void sendTabPacket(WrappedHeaderFooter packetTabHeader) throws Exception {
 
         sendPacket(packetTabHeader);
     }
@@ -126,19 +126,19 @@ public class WrappedPlayer {
     /**
      * Send Action Bar Packet
      *
-     * @param packetActionBar PacketPlayOutChat packet configured as a system packet
+     * @param packetActionBar WrappedChatPacket packet configured as a system packet
      * @throws Exception the most like to indicate the player object has been de referenced.
      */
-    public void sendActionBarPacket(PacketPlayOutChat packetActionBar) throws Exception {
+    public void sendActionBarPacket(WrappedChatPacket packetActionBar) throws Exception {
 
         sendPacket(packetActionBar);
     }
 
     @SuppressWarnings("ConstantConditions")
-    protected void sendPacket(Packet packet) throws Exception {
+    protected void sendPacket(WrappedPacket packet) throws Exception {
         if (player.get() == null)
             throw new Exception("Reference to current player object has been lost", new Throwable("Player object is dereferenced"));
-        this.player.get().getHandle().playerConnection.sendPacket(packet);
+        packet.send(player.get());
 
     }
 
@@ -148,7 +148,7 @@ public class WrappedPlayer {
      *
      * @return wrapped player.
      */
-    public WeakReference<CraftPlayer> getPlayer() {
+    public WeakReference<Player> getPlayer() {
         return player;
     }
 

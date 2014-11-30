@@ -28,14 +28,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * TitleComponents is built using {@link com.relicum.titleapi.Components.TitleBuilder} .
+ * TitleComponents is built using {@link TitleBuilderOld} .
  * <p>Holds all the values required to send a basic Title and Sub Title to the player with the advantage that this class already implements {@link org.bukkit.configuration.serialization.ConfigurationSerializable} .
  * <p>This allows you to save this instances of this object to the standard config.yml file like it was any other value. Nothing extra is required when saving and loading it from file.
  * <p>You will need to add this to your plugins onEnable, needs to be the first or second line of the method <i>ConfigurationSerialization.registerClass(TitleComponents.class);</i>
  * <p>Use <strong>&amp;</strong> and the color code to add color eg <strong>&amp;4</strong> for dark red.
  * <pre>
  *     <code>
- *      TitleComponents titleBuilder = TitleBuilder.get()
+ *      TitleComponents titleBuilder = TitleBuilderOld.get()
  *          .withSubTitle("&amp;5This is the sub title")
  *          .withTitle("&amp;aThe main title")
  *          .withTimes(-1,80,-1)

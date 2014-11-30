@@ -1,4 +1,4 @@
-##TitleApi 1.0.4-SNAPSHOT
+##TitleApi 1.0.5-SNAPSHOT
 
 **Built using the best Java IDE around**
 
@@ -6,7 +6,7 @@
 
 ```
 REQUIRES
-* Latest Patch Spigot
+* Latest Spigot 1.8
 * Java 8 installed (Server Side)
 ```
 

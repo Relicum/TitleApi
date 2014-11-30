@@ -70,6 +70,7 @@ public class MultiComponents {
     /**
      * Gets theSubTitles.
      *
+     * @param index next title
      * @return Value of theSubTitles.
      */
     public String getNextSubTitle(int index) {

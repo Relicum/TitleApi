@@ -16,44 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.relicum.titleapi.Components;
+package com.relicum.titleapi.Exception;
 
 /**
- * TabBuilder used to create the parts of a Header and Footer packet.
+ * FailedPacketSendException thrown when a packet fail to send.
  *
  * @author Relicum
  * @version 0.0.1
  */
-public class TabBuilder {
+public class FailedPacketSendException extends Exception {
 
-
-    private String header;
-    private String footer;
-
-    private TabBuilder() {
-
+    public FailedPacketSendException(String message) {
+        super(message);
     }
 
-    public static TabBuilder get() {
-        return new TabBuilder();
+    public FailedPacketSendException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    public TabBuilder setHeader(String header) {
-        this.header = header;
-        return this;
-    }
-
-    public TabBuilder setFooter(String footer) {
-        this.footer = footer;
-        return this;
-    }
-
-
-    public String getHeader() {
-        return header;
-    }
-
-    public String getFooter() {
-        return footer;
+    public FailedPacketSendException(Throwable cause) {
+        super(cause);
     }
 }

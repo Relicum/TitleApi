@@ -24,7 +24,7 @@ import org.bukkit.plugin.Plugin;
 /**
  * PlayerHolder used to define placeholders directly related to the {@link org.bukkit.entity.Player} object.
  * <p>Just add the name of the place holder wrapped with brackets <strong>{player}</strong> and use the {@link PlayerHolder} to do the replacing.
- * <p>By default placeholders is not activated to activate it call {@link com.relicum.titleapi.API#enablePlaceHolders()} method.
+ * <p>By default placeholders is not activated to activate it call {@link TitleMaker#enablePlaceHolders()} method.
  * <p>Then pass the raw message to {@link com.relicum.titleapi.TitleApi#replaceHolders(String, org.bukkit.entity.Player)}
  *
  * @author Relicum
