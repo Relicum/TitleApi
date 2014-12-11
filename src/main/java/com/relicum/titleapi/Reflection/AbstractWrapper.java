@@ -26,9 +26,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * Name: AbstractWrapper.java Created: 29 November 2014
+ * AbstractWrapper
+ * <p>This class was written by dmulloy2, many thanks for allowing the usage.
  *
- * @author Relicum
+ * @author dmulloy2
  * @version 0.0.1
  */
 @Data

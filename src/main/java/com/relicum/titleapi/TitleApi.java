@@ -53,6 +53,10 @@ public class TitleApi extends JavaPlugin implements Listener {
 
     }
 
+    public static void main(String[] args) {
+
+    }
+
     @Override
     public void onDisable() {
         pluginNames.clear();
@@ -123,6 +127,7 @@ public class TitleApi extends JavaPlugin implements Listener {
         getCommand("testholder").setTabCompleter(cmd);
         getCommand("testbar").setExecutor(cmd);
         getCommand("testtab").setExecutor(cmd);
+        getCommand("testcount").setExecutor(cmd);
     }
 
 }

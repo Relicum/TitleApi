@@ -19,8 +19,6 @@
 package com.relicum.titleapi;
 
 import com.relicum.titleapi.Components.TabBuilder;
-import com.relicum.titleapi.Components.Title;
-import com.relicum.titleapi.Components.TitleTimes;
 import com.relicum.titleapi.Exception.ReflectionException;
 import com.relicum.titleapi.Reflection.WrappedChatPacket;
 import com.relicum.titleapi.Reflection.WrappedHeaderFooter;
@@ -167,11 +165,38 @@ public class TitleMaker {
      *
      * @param message the message to display in the Title
      * @return WrappedTitlePacket
-     * @throws ReflectionException
+     * @throws ReflectionException if an error occurs.
      */
     public WrappedTitlePacket getTitlePacket(String message) throws ReflectionException {
 
         return ActionPackets.getTitle(message);
+    }
+
+    /**
+     * Send title packet.
+     *
+     * @param player the player
+     * @param message the message
+     * @throws ReflectionException the reflection exception
+     */
+    public void sendTitlePacket(Player player, String message) throws ReflectionException {
+
+        PacketSender.sendTitlePacket(player, ActionPackets.getTitle(message));
+    }
+
+    /**
+     * Send title packet.
+     *
+     * @param player  the player
+     * @param message the message
+     * @param in      the in
+     * @param stay    the stay
+     * @param out     the out
+     * @throws ReflectionException the reflection exception
+     */
+    public void sendTitlePacket(Player player, String message, int in, int stay, int out) throws ReflectionException {
+
+        PacketSender.sendTitlePacket(player, ActionPackets.getTitleWithTimes(message, in, stay, out));
     }
 
     /**
@@ -200,6 +225,33 @@ public class TitleMaker {
     public WrappedTitlePacket getSubTitlePacket(String message) throws ReflectionException {
 
         return ActionPackets.getSubTitle(message);
+    }
+
+    /**
+     * Send sub title packet.
+     *
+     * @param player  the player
+     * @param message the message
+     * @throws ReflectionException the reflection exception
+     */
+    public void sendSubTitlePacket(Player player, String message) throws ReflectionException {
+
+        PacketSender.sendTitlePacket(player, ActionPackets.getSubTitle(message));
+    }
+
+    /**
+     * Send sub title packet.
+     *
+     * @param player  the player
+     * @param message the message
+     * @param in      the in
+     * @param stay    the stay
+     * @param out     the out
+     * @throws ReflectionException the reflection exception
+     */
+    public void sendSubTitlePacket(Player player, String message, int in, int stay, int out) throws ReflectionException {
+
+        PacketSender.sendTitlePacket(player, ActionPackets.getSubTitleWithTimes(message, in, stay, out));
     }
 
     /**
@@ -277,16 +329,6 @@ public class TitleMaker {
     public TabSender getTabSender(String header, String footer) {
 
         return TabSender.get(header, footer);
-    }
-
-    public Title getTitle() {
-
-        return StandardTitle.get();
-    }
-
-    public BasicTitle getNewBasicTitle() {
-
-        return BasicTitle.get();
     }
 
     public void enablePlaceHolders() {

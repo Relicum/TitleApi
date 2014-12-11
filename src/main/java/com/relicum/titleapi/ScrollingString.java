@@ -29,6 +29,7 @@ public class ScrollingString {
     private int width;
     private int position;
 
+
     public ScrollingString(String original, int width) {
         if (width <= 0)
             throw new IllegalArgumentException("Width value has to be greater than 0");

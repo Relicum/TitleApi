@@ -1,4 +1,4 @@
-##TitleApi 1.0.5-SNAPSHOT
+##TitleApi 1.0.6-SNAPSHOT
 
 **Built using the best Java IDE around**
 
@@ -24,7 +24,7 @@ All plugins that wish to use this must make sure there plugin.yml includes a dep
 
 ###Get an instance of the API
 ```java
-       API api;
+       TitleMaker api;
        if (!getServer().getPluginManager().isPluginEnabled("TitleApi")) {
            getServer().getPluginManager().disablePlugin(this);
        } else {

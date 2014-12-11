@@ -16,12 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.relicum.titleapi.Components;
+package com.relicum.titleapi;
 
 /**
  * TitleTimes is used to create the values for a Times packets.
  * <p>Both fade in and fade out are optional and set to -1 as default which means there is not any animation.
- * <p>All times are represented in ticks. Call {@link TitleTimes.TitleTimesBuilder#build()} to be the instance of {@link com.relicum.titleapi.Components.TitleTimes}
+ * <p>All times are represented in ticks. Call {@link TitleTimes.TitleTimesBuilder#build()} to be the instance of {@link TitleTimes}
  * <p>This object can be passed directly to {@link com.relicum.titleapi.TitleMaker#getTimesPacket(TitleTimes)} to create a Times packet.
  *
  * @author Relicum
@@ -125,9 +125,9 @@ public class TitleTimes {
         }
 
         /**
-         * Build and return new {@link com.relicum.titleapi.Components.TitleTimes} object
+         * Build and return new {@link TitleTimes} object
          *
-         * @return the {@link com.relicum.titleapi.Components.TitleTimes}
+         * @return the {@link TitleTimes}
          */
         public TitleTimes build() {
             return new TitleTimes(this);
