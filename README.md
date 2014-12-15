@@ -1,4 +1,4 @@
-##TitleApi 1.0.6-SNAPSHOT
+##TitleApi 1.0.7-SNAPSHOT
 
 **Built using the best Java IDE around**
 
