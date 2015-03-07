@@ -7,7 +7,7 @@
     <artifactId>TitleApi</artifactId>
     <packaging>jar</packaging>
     <name>TitleApi</name>
-    <version>1.0.7-SNAPSHOT</version>
+    <version>1.0.8-SNAPSHOT</version>
 
     <build>
         <defaultGoal>clean install</defaultGoal>
@@ -47,7 +47,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
-                    <outputDirectory>G:\Users\Relicum\Desktop\MCTest\plugins
+                    <outputDirectory>G:\Users\Relicum\Desktop\MCTest2\plugins
                     </outputDirectory>
                 </configuration>
             </plugin>
@@ -112,8 +112,8 @@
 
     <repositories>
         <repository>
-            <id>bukkit-repo</id>
-            <url>http://repo.bukkit.org/content/groups/public</url>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
         <repository>
             <id>repo.oc.tc</id>
@@ -123,21 +123,21 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.8-R0.1-SNAPSHOT</version>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.8.3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>minecraft-server</artifactId>
-            <version>1.8-SNAPSHOT</version>
+            <version>1.8.3-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
-            <version>1.8-R0.1-SNAPSHOT</version>
+            <version>1.8.3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

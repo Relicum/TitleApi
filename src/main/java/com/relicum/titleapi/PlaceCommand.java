@@ -83,7 +83,7 @@ class PlaceCommand implements TabExecutor {
             // mess.add(i, String.format(str, colorCharacter.get(i), colorCharacter.get(i)));
         }
 
-        System.out.println(mess.toString());
+        //System.out.println(mess.toString());
     }
 
     @Override

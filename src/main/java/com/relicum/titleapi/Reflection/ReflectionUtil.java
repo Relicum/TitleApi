@@ -18,7 +18,7 @@
 
 package com.relicum.titleapi.Reflection;
 
-import net.minecraft.server.v1_8_R1.EntityArmorStand;
+import net.minecraft.server.v1_8_R2.EntityArmorStand;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.Bukkit;
 

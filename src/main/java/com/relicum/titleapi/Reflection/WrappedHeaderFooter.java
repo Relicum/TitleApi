@@ -27,6 +27,7 @@ import com.relicum.titleapi.Exception.ReflectionException;
  * @version 0.0.1
  */
 public class WrappedHeaderFooter extends WrappedPacket {
+
     private static final String NMS_CLASS_NAME = "PacketPlayOutPlayerListHeaderFooter";
     private static final Class<?> chatComponentClass = ReflectionUtil.getNMSClass("IChatBaseComponent");
 

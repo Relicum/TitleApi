@@ -49,6 +49,7 @@ public class TitleApi extends JavaPlugin implements Listener {
         beingUsed = false;
         Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "Title API is being enabled");
 
+
         setUpPlaceHolders();
 
     }
@@ -80,7 +81,6 @@ public class TitleApi extends JavaPlugin implements Listener {
      */
     public TitleMaker getTitleApi(Plugin plugin) throws Exception {
 
-
         if (pluginNames.contains(plugin.getName())) {
 
             throw new Exception("This plugin " + plugin.getName() + " tried to create multiple instances of TitleApi");
@@ -97,7 +97,6 @@ public class TitleApi extends JavaPlugin implements Listener {
             plugin.getLogger().info("TitleApi Successfully Hooked");
             return new TitleMaker(plugin);
         }
-
 
     }
 
