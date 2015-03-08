@@ -73,7 +73,7 @@ public class ActionPackets {
      */
     protected static WrappedTitlePacket getReset() throws ReflectionException {
 
-        return new WrappedTitlePacket(TitleAction.RESET);
+        return new WrappedTitlePacket(WrappedTitlePacket.TitleAction.RESET);
     }
 
 
@@ -85,7 +85,7 @@ public class ActionPackets {
      */
     protected static WrappedTitlePacket getClear() throws ReflectionException {
 
-        return new WrappedTitlePacket(TitleAction.CLEAR);
+        return new WrappedTitlePacket(WrappedTitlePacket.TitleAction.CLEAR);
     }
 
     /**
@@ -97,7 +97,7 @@ public class ActionPackets {
      */
     protected static WrappedTitlePacket getTitle(String message) throws ReflectionException {
 
-        return new WrappedTitlePacket(TitleAction.TITLE, message);
+        return new WrappedTitlePacket(WrappedTitlePacket.TitleAction.TITLE, message);
     }
 
     /**
@@ -112,7 +112,7 @@ public class ActionPackets {
      */
     protected static WrappedTitlePacket getTitleWithTimes(String message, int fadeIn, int stay, int fadeOut) throws ReflectionException {
 
-        return new WrappedTitlePacket(TitleAction.TITLE, message, fadeIn, stay, fadeOut);
+        return new WrappedTitlePacket(WrappedTitlePacket.TitleAction.TITLE, message, fadeIn, stay, fadeOut);
     }
 
 
@@ -125,7 +125,7 @@ public class ActionPackets {
      */
     protected static WrappedTitlePacket getSubTitle(String message) throws ReflectionException {
 
-        return new WrappedTitlePacket(TitleAction.SUBTITLE, message);
+        return new WrappedTitlePacket(WrappedTitlePacket.TitleAction.SUBTITLE, message);
 
     }
 
@@ -141,7 +141,7 @@ public class ActionPackets {
      */
     protected static WrappedTitlePacket getSubTitleWithTimes(String message, int fadeIn, int stay, int fadeOut) throws ReflectionException {
 
-        return new WrappedTitlePacket(TitleAction.SUBTITLE, message, fadeIn, stay, fadeOut);
+        return new WrappedTitlePacket(WrappedTitlePacket.TitleAction.SUBTITLE, message, fadeIn, stay, fadeOut);
     }
 
 

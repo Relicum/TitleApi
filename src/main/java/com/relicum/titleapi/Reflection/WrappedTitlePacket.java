@@ -19,7 +19,6 @@
 package com.relicum.titleapi.Reflection;
 
 import com.relicum.titleapi.Exception.ReflectionException;
-import com.relicum.titleapi.TitleAction;
 
 /**
  * WrappedTitlePacket used to create Title packets which are then sent to players.
@@ -33,7 +32,8 @@ public class WrappedTitlePacket extends WrappedPacket {
 
     private static final String NMS_CLASS_NAME = "PacketPlayOutTitle";
     private static final Class<?> chatComponentClass = ReflectionUtil.getNMSClass("IChatBaseComponent");
-    private static Class enumTitleAction = ReflectionUtil.getNMSClass("EnumTitleAction");
+
+    private static Class enumTitleAction = ReflectionUtil.getNMSClass("PacketPlayOutTitle$EnumTitleAction");
 
 
     /**
@@ -62,11 +62,12 @@ public class WrappedTitlePacket extends WrappedPacket {
      * Instantiates a new Wrapped title packet.
      * <p>All color encoding is done for you. If you are using placeholders make sure you have parsed them before passing it here.
      *
-     * @param action        the {@link TitleAction} which refines the packet type
+     * @param action        the {@link WrappedTitlePacket.TitleAction} which refines the packet type
      * @param chatComponent the message for the Title of SubTitle
      * @throws ReflectionException if there was a problem creating the packets due to reflection
      */
-    public WrappedTitlePacket(TitleAction action, String chatComponent) throws ReflectionException {
+    public WrappedTitlePacket(WrappedTitlePacket.TitleAction action, String chatComponent) throws ReflectionException
+    {
 
         try {
             this.nmsClass = ReflectionUtil.getNMSClass(NMS_CLASS_NAME);
@@ -92,14 +93,15 @@ public class WrappedTitlePacket extends WrappedPacket {
     /**
      * Instantiates a new Wrapped title packet.
      *
-     * @param action        the {@link TitleAction} which refines the packet type
+     * @param action        the {@link WrappedTitlePacket.TitleAction} which refines the packet type
      * @param chatComponent the message for the Title of SubTitle
      * @param in            the length in seconds of fade in animation
      * @param stay          the length in seconds the title will display
      * @param out           the length in seconds of fade out animation
      * @throws ReflectionException if there was a problem creating the packets due to reflection
      */
-    public WrappedTitlePacket(TitleAction action, String chatComponent, int in, int stay, int out) throws ReflectionException {
+    public WrappedTitlePacket(WrappedTitlePacket.TitleAction action, String chatComponent, int in, int stay, int out) throws ReflectionException
+    {
 
         try {
 
@@ -126,10 +128,11 @@ public class WrappedTitlePacket extends WrappedPacket {
     /**
      * Instantiates a new Wrapped title packet, ONLY USE FOR RESET AND CLEAR
      *
-     * @param action either RESET or CLEAR {@link TitleAction}
+     * @param action either RESET or CLEAR {@link WrappedTitlePacket.TitleAction}
      * @throws ReflectionException if there was a problem creating the packets due to reflection
      */
-    public WrappedTitlePacket(TitleAction action) throws ReflectionException {
+    public WrappedTitlePacket(WrappedTitlePacket.TitleAction action) throws ReflectionException
+    {
 
         try {
             this.nmsClass = ReflectionUtil.getNMSClass(NMS_CLASS_NAME);
@@ -152,5 +155,17 @@ public class WrappedTitlePacket extends WrappedPacket {
         }
 
 
+    }
+
+    /**
+     * TitleAction this mirrors an internal NMS class this is used to define the actions related to a Title. <p>The reason to mirror the class is to make it easier to have full
+     * reflection of the package.
+     *
+     * @author Relicum
+     * @version 0.0.1
+     */
+    public static enum TitleAction
+    {
+        TITLE, SUBTITLE, TIMES, CLEAR, RESET
     }
 }

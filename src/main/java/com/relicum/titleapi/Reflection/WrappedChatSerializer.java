@@ -30,7 +30,8 @@ import java.lang.reflect.Method;
  * @version 0.0.1
  */
 public class WrappedChatSerializer extends AbstractWrapper {
-    private static final String NMS_CLASS_NAME = "ChatSerializer";
+
+    private static final String NMS_CLASS_NAME = "IChatBaseComponent$ChatSerializer";
 
     private final Method a;
 
