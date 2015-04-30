@@ -44,15 +44,6 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <outputDirectory>G:\Users\Relicum\Desktop\UHC\plugins
-                    </outputDirectory>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>2.9.1</version>
                 <executions>
@@ -67,7 +58,7 @@
                 <configuration>
                     <charset>UTF-8</charset>
                     <links>
-                        <link>http://jd.bukkit.org/dev/apidocs/</link>
+                        <link>https://hub.spigotmc.org/javadocs/spigot/</link>
                     </links>
                     <linksource>true</linksource>
                 </configuration>
@@ -120,7 +111,6 @@
             <url>https://repo.oc.tc/content/repositories/public/</url>
         </repository>
     </repositories>
-
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -143,7 +133,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.14.4</version>
+            <version>1.16.2</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

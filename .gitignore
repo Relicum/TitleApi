@@ -8,6 +8,8 @@ test/
 bin/
 tmp/
 target/
+src/
+docs/
 production/
 META-INF/
 *.tmp
